@@ -1,7 +1,7 @@
-package com.kdt.gccoffee.controller.api;
+package com.kdt.gccoffee.controller.api.customer;
 
-import com.kdt.gccoffee.service.CustomerDto;
-import com.kdt.gccoffee.service.CustomerService;
+import com.kdt.gccoffee.service.customer.CustomerDto;
+import com.kdt.gccoffee.service.customer.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

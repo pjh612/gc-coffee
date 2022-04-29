@@ -1,4 +1,4 @@
-package com.kdt.gccoffee.service;
+package com.kdt.gccoffee.service.customer;
 
 import com.kdt.gccoffee.model.Customer;
 import com.kdt.gccoffee.model.Gender;
