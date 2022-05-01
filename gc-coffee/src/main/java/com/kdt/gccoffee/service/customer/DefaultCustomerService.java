@@ -36,7 +36,6 @@ public class DefaultCustomerService implements CustomerService {
 
     @Override
     public List<CustomerDto> findByName(String name) {
-
         return customerRepository.findByName(name)
                 .stream()
                 .map(CustomerDto::of)

@@ -1,8 +1,6 @@
 package com.kdt.gccoffee.repository.customer;
 
-import com.kdt.gccoffee.model.Category;
 import com.kdt.gccoffee.model.Customer;
-import com.kdt.gccoffee.model.Product;
 
 import java.util.List;
 import java.util.Optional;
