@@ -2,6 +2,7 @@ package com.kdt.hairsalon.repository.appointment;
 
 import com.kdt.hairsalon.model.Appointment;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -47,26 +48,32 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
 
     @Override
     public Optional<Appointment> findByAppointmentId(UUID appointmentId) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("SELECT * FROM appointments WHERE appointment_id = UNHEX(REPLACE(:appointmentId, '-', ''))",
-                        Collections.singletonMap("appointmentId", appointmentId.toString().getBytes()), appointmentRowMapper
-                )
-        );
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT * FROM appointments WHERE appointment_id = UNHEX(REPLACE(:appointmentId, '-', ''))",
+                    Collections.singletonMap("appointmentId", appointmentId.toString().getBytes()), appointmentRowMapper));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+
     }
 
     @Override
     public Optional<Appointment> findByCustomerId(UUID customerId) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("SELECT * FROM appointments WHERE customer_id = UNHEX(REPLACE(:customerId, '-', ''))",
-                        Collections.singletonMap("appointmentId", customerId.toString().getBytes()), appointmentRowMapper
-                )
-        );
+        try {
+            return Optional.ofNullable(
+                    jdbcTemplate.queryForObject("SELECT * FROM appointments WHERE customer_id = UNHEX(REPLACE(:customerId, '-', ''))",
+                            Collections.singletonMap("customerId", customerId.toString().getBytes()), appointmentRowMapper
+                    ));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+
     }
 
     @Override
     public List<Appointment> findByDesignerId(UUID designerId) {
         return jdbcTemplate.query("SELECT * FROM appointments WHERE designer_id = UNHEX(REPLACE(:designerId, '-', ''))",
-                        Collections.singletonMap("appointmentId", designerId.toString().getBytes()), appointmentRowMapper);
+                Collections.singletonMap("designerId", designerId.toString().getBytes()), appointmentRowMapper);
     }
 
     @Override
@@ -76,7 +83,7 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
 
     @Override
     public Appointment updateByAppointmentId(Appointment appointment) {
-        int update = jdbcTemplate.update("UPDATE appointments SET menu_id = UNHEX(REPLACE(:id, '-', '')), appointed_at = :appintedAt WHERE appointment_id = UNHEX(REPLACE(:appointmentId, '-', ''))",
+        int update = jdbcTemplate.update("UPDATE appointments SET menu_id = UNHEX(REPLACE(:menuId, '-', '')), appointed_at = :appointedAt WHERE appointment_id = UNHEX(REPLACE(:appointmentId, '-', ''))",
                 toParamMap(appointment));
 
         if (update != 1)
