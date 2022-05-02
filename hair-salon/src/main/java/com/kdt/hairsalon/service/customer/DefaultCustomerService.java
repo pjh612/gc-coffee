@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class DefaultCustomerService implements CustomerService {
@@ -19,6 +21,7 @@ public class DefaultCustomerService implements CustomerService {
     private final CustomerRepository customerRepository;
 
     @Override
+    @Transactional
     public CustomerDto create(String name, String email, Gender gender, LocalDate birth) {
         Customer customer = new Customer(UUID.randomUUID(), name, email, gender, birth, LocalDateTime.now(), LocalDateTime.now());
 
@@ -28,6 +31,7 @@ public class DefaultCustomerService implements CustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CustomerDto findById(UUID id) {
         Customer customer = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 ID로 Customer를 찾을 수 없습니다."));
 
@@ -35,6 +39,7 @@ public class DefaultCustomerService implements CustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CustomerDto> findByName(String name) {
         return customerRepository.findByName(name)
                 .stream()
@@ -43,6 +48,7 @@ public class DefaultCustomerService implements CustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CustomerDto findByEmail(String email) {
         Customer customer = customerRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 email로 Customer를 찾을 수 없습니다."));
 
@@ -50,6 +56,7 @@ public class DefaultCustomerService implements CustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CustomerDto> findAll() {
         return customerRepository.findAll().stream()
                 .map(CustomerDto::of)
