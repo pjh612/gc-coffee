@@ -64,12 +64,9 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
     }
 
     @Override
-    public Optional<Appointment> findByDesignerId(UUID designerId) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("SELECT * FROM appointments WHERE designer_id = UNHEX(REPLACE(:designerId, '-', ''))",
-                        Collections.singletonMap("appointmentId", designerId.toString().getBytes()), appointmentRowMapper
-                )
-        );
+    public List<Appointment> findByDesignerId(UUID designerId) {
+        return jdbcTemplate.query("SELECT * FROM appointments WHERE designer_id = UNHEX(REPLACE(:designerId, '-', ''))",
+                        Collections.singletonMap("appointmentId", designerId.toString().getBytes()), appointmentRowMapper);
     }
 
     @Override

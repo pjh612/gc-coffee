@@ -15,7 +15,7 @@ public interface AppointmentRepository {
 
     Optional<Appointment> findByCustomerId(UUID customerId);
 
-    Optional<Appointment> findByDesignerId(UUID designerId);
+    List<Appointment> findByDesignerId(UUID designerId);
 
     List<Appointment> findAll();
 
