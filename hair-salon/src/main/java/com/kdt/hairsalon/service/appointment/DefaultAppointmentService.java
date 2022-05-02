@@ -26,6 +26,14 @@ public class DefaultAppointmentService implements AppointmentService {
     }
 
     @Override
+    public List<AppointmentDto> findAll() {
+        return appointmentRepository.findAll()
+                .stream()
+                .map(AppointmentDto::of)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public AppointmentDto findByAppointmentId(UUID appointmentId) {
         return AppointmentDto.of(
                 appointmentRepository.findByAppointmentId(appointmentId).orElseThrow(() -> new IllegalArgumentException("예약 정보를 찾을 수 없습니다."))
