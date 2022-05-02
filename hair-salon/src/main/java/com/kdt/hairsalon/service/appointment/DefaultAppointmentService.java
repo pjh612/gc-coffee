@@ -62,6 +62,7 @@ public class DefaultAppointmentService implements AppointmentService {
 
     @Override
     public AppointmentDto updatedByAppointmentId(UUID appointmentId, UUID menuId, LocalDateTime appointedAt) {
-        return null;
+        Appointment appointment = new Appointment(appointmentId, menuId, )
+        appointmentRepository.updateByAppointmentId()
     }
 }
