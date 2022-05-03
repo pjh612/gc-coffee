@@ -4,6 +4,7 @@ import com.kdt.hairsalon.model.Appointment;
 import com.kdt.hairsalon.repository.appointment.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +18,7 @@ public class DefaultAppointmentService implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
 
     @Override
+    @Transactional
     public AppointmentDto make(UUID menuId, UUID customerId, UUID designerId, LocalDateTime appointedAt) {
         Appointment appointment = new Appointment(UUID.randomUUID(), menuId, customerId, designerId, appointedAt);
 
@@ -26,6 +28,7 @@ public class DefaultAppointmentService implements AppointmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AppointmentDto> findAll() {
         return appointmentRepository.findAll()
                 .stream()
@@ -34,6 +37,7 @@ public class DefaultAppointmentService implements AppointmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public AppointmentDto findByAppointmentId(UUID appointmentId) {
         return AppointmentDto.of(
                 appointmentRepository.findByAppointmentId(appointmentId).orElseThrow(() -> new IllegalArgumentException("예약 정보를 찾을 수 없습니다."))
@@ -41,6 +45,7 @@ public class DefaultAppointmentService implements AppointmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public AppointmentDto findByCustomerId(UUID customerId) {
         return AppointmentDto.of(
                 appointmentRepository.findByCustomerId(customerId).orElseThrow(() -> new IllegalArgumentException("예약 정보를 찾을 수 없습니다."))
@@ -56,13 +61,17 @@ public class DefaultAppointmentService implements AppointmentService {
     }
 
     @Override
+    @Transactional
     public void deleteByAppointmentId(UUID appointmentId) {
         appointmentRepository.deleteByAppointmentId(appointmentId);
     }
 
     @Override
-    public AppointmentDto updatedByAppointmentId(UUID appointmentId, UUID menuId, LocalDateTime appointedAt) {
-        Appointment appointment = new Appointment(appointmentId, menuId, )
-        appointmentRepository.updateByAppointmentId()
+    @Transactional
+    public AppointmentDto updatedByAppointmentId(UUID appointmentId, LocalDateTime appointedAt) {
+        Appointment foundAppointment = appointmentRepository.findByAppointmentId(appointmentId).orElseThrow(() -> new IllegalArgumentException("예약 정보를 찾을 수 없습니다."));
+
+        foundAppointment.updateAppointedAt(appointedAt);
+        return AppointmentDto.of(appointmentRepository.updateByAppointmentId(foundAppointment));
     }
 }

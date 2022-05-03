@@ -18,5 +18,5 @@ public interface AppointmentService {
 
     void deleteByAppointmentId(UUID appointmentId);
 
-    AppointmentDto updatedByAppointmentId(UUID appointmentId, UUID menuId, LocalDateTime appointedAt);
+    AppointmentDto updatedByAppointmentId(UUID appointmentId, LocalDateTime appointedAt);
 }

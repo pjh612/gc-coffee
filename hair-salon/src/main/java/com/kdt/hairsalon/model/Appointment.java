@@ -21,4 +21,8 @@ public class Appointment {
         this.designerId = designerId;
         this.appointedAt = appointedAt.withNano(0);
     }
+
+    public void updateAppointedAt(LocalDateTime appointedAt) {
+        this.appointedAt = appointedAt;
+    }
 }

@@ -1,11 +1,10 @@
 package com.kdt.hairsalon.controller.api;
 
 import com.kdt.hairsalon.model.Position;
-
-import java.util.UUID;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor

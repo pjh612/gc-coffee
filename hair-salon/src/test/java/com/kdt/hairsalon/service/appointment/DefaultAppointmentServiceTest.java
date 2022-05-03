@@ -15,7 +15,6 @@ import com.wix.mysql.distribution.Version;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -160,18 +159,18 @@ class DefaultAppointmentServiceTest {
     }
 
     @Test
-    @DisplayName("AppointmentID로 예약 정보 업데이트(시술 변경)")
+    @DisplayName("AppointmentID로 예약 정보 업데이트(예약시간 변경)")
     void updatedByAppointmentIdTest() {
         //given
-        AppointmentDto appointment = appointmentService.make(menuA.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
+        AppointmentDto toUpdateAppointment = appointmentService.make(menuA.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
 
         //when
-        appointmentService.updatedByAppointmentId(appointment.getAppointmentId(), menuB.getId(), appointment.getAppointedAt());
-        AppointmentDto foundAppointment = appointmentService.findByAppointmentId(appointment.getAppointmentId());
+        appointmentService.updatedByAppointmentId(toUpdateAppointment.getAppointmentId(), toUpdateAppointment.getAppointedAt());
+        AppointmentDto foundAppointment = appointmentService.findByAppointmentId(toUpdateAppointment.getAppointmentId());
 
         //then
-        assertThat(foundAppointment.getMenuId(), is(menuB.getId()));
-        assertThat(foundAppointment.getAppointmentId(), is(appointment.getAppointmentId()));
-        assertThat(foundAppointment.getAppointedAt(), is(appointment.getAppointedAt()));
+        assertThat(foundAppointment.getMenuId(), is(menuA.getId()));
+        assertThat(foundAppointment.getAppointmentId(), is(toUpdateAppointment.getAppointmentId()));
+        assertThat(foundAppointment.getAppointedAt(), is(toUpdateAppointment.getAppointedAt()));
     }
 }

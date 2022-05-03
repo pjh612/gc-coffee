@@ -31,7 +31,7 @@ public class AppointmentRestController {
     @PatchMapping
     public ResponseEntity<AppointmentDto> updateByAppointmentId(@RequestBody UpdateAppointmentRequest request) {
         return ResponseEntity.ok(
-                appointmentService.updatedByAppointmentId(request.getAppointmentId(), request.getMenuId(), request.getAppointedAt())
+                appointmentService.updatedByAppointmentId(request.getAppointmentId(), request.getAppointedAt())
         );
     }
 
