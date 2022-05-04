@@ -8,8 +8,8 @@ import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor
-public class UpdateDesignerDto {
-    private final UUID id;
-    private final String name;
-    private final Position position;
+public class UpdateDesignerRequest {
+    private  UUID id;
+    private  String name;
+    private  Position position;
 }
