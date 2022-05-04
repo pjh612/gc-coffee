@@ -47,7 +47,7 @@ public class CustomerJdbcRepository implements CustomerRepository {
     @Override
     public List<Customer> findByName(String name) {
         return jdbcTemplate.query("SELECT * FROM customers WHERE name = :name",
-                        Collections.singletonMap("name", name), productRowMapper
+                Collections.singletonMap("name", name), productRowMapper
         );
     }
 

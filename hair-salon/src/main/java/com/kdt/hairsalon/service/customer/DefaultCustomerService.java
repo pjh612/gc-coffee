@@ -5,14 +5,13 @@ import com.kdt.hairsalon.model.Gender;
 import com.kdt.hairsalon.repository.customer.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

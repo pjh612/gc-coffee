@@ -1,18 +1,17 @@
 package com.kdt.hairsalon.repository.menu;
 
-import static com.kdt.hairsalon.repository.JdbcUtils.toLocalDateTime;
-import static com.kdt.hairsalon.repository.JdbcUtils.toUUID;
-
 import com.kdt.hairsalon.model.Menu;
-
-import java.time.LocalDateTime;
-import java.util.*;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.*;
+
+import static com.kdt.hairsalon.repository.JdbcUtils.toLocalDateTime;
+import static com.kdt.hairsalon.repository.JdbcUtils.toUUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -65,7 +64,7 @@ public class MenuJdbcRepository implements MenuRepository {
         LocalDateTime createdAt = toLocalDateTime(resultSet.getTimestamp("created_at"));
         LocalDateTime updatedAt = toLocalDateTime(resultSet.getTimestamp("updated_at"));
 
-        return new Menu(id, name, price, createdAt,updatedAt);
+        return new Menu(id, name, price, createdAt, updatedAt);
     };
 
     private Map<String, Object> toParamMap(Menu menu) {
