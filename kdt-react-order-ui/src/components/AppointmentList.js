@@ -2,7 +2,7 @@ import {Appointment} from "./Appointment";
 
 export function AppointmentList({appointments = [], setAppointments}) {
     const onRemove = id => {
-        setAppointments(appointments.filter(a => a.id !== id));
+        setAppointments(appointments.filter(a => a.appointmentId !== id));
     };
     return <>
         <h5 className="flex-grow-0"><b>예약 목록</b></h5>

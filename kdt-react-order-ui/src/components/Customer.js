@@ -10,13 +10,13 @@ export function Customer(props) {
 
     const handleSubmit = (e) => {
         axios({
-                url:`http://localhost:8080/api/v1/customers/`+id,
-                method : 'delete'
+                url: `http://localhost:8080/api/v1/customers/` + id,
+                method: 'delete'
             }
-
         ).then(
-            v =>{ alert("손님 정보가 삭제되었습니다.")
-            props.onRemove(id)
+            v => {
+                alert("손님 정보가 삭제되었습니다.");
+                props.onRemove(id);
             },
             e => {
                 alert("서버 장애");

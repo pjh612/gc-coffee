@@ -16,7 +16,7 @@ export function MenuAdd({onAdd}) {
                 }
             ).then(
                 v =>{ alert("시술이 추가되었습니다.")
-                onAdd(menu);
+                onAdd(menu,v.data.id);
                 },
                 e => {
                     alert("서버 장애");

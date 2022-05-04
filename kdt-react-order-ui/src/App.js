@@ -25,23 +25,30 @@ function App() {
     ]);
 
     const [appointments, setAppointments] = useState([
-        {appointmentId: 'uuid-1', customerId: '', menuId: '', designerId: '', appointedAt:''},
+        {appointmentId: 'uuid-1', customerId: '',customerName:'', menuId: '',menuName:'', designerId: '',designerName:'', appointedAt:''},
     ]);
 
     const [customers, setCustomers] = useState([
         {id: 'uuid-1', name: '', email: '', gender: '', birth:''},
     ]);
 
-    const onMenuAdd = o => {
+    const onMenuAdd = (o,id)=> {
+        o = {...o, id : id};
         setMenus(menus.concat(o));
     };
-    const onCustomerAdd = o => {
+    const onCustomerAdd = (o,id) => {
+        o = {...o, id : id};
         setCustomers(customers.concat(o));
     };
-    const onDesignerAdd = o => {
+    const onDesignerAdd = (o,id) => {
+        console.log(id);
+        o = {...o, id : id};
         setDesigners(designers.concat(o));
+
     };
-    const onAppointmentAdd = o => {
+    const onAppointmentAdd = (o,data) => {
+        console.log(data);
+        o = {...o, appointmentId:data.appointmentId, designerName:data.designerName, menuName: data.menuName, customerName:data.customerName};
         setAppointments(appointments.concat(o));
     };
     useEffect(() => {
@@ -54,8 +61,6 @@ function App() {
         axios.get('http://localhost:8080/api/v1/customers')
             .then(v => setCustomers(v.data));
     }, []);
-
-
 
     return (
         <div className="container-fluid">

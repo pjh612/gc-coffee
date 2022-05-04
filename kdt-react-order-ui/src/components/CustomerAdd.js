@@ -19,10 +19,12 @@ export function CustomerAdd({onAdd}) {
 
             }
         ).then(
-            v => alert("회원이 추가되었습니다."),
+            v => {alert("회원이 추가되었습니다.");
+                onAdd(customer,v.data.id);
+            },
             e => {
                 alert("서버 장애");
-                onAdd(customer);
+
                 console.error(e);
             })
     }

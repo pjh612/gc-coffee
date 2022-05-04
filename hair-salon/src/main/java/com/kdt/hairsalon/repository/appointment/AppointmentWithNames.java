@@ -9,14 +9,20 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 public class AppointmentWithNames {
-    private UUID id;
+    private UUID appointmentId;
+    private UUID designerId;
+    private UUID customerId;
+    private UUID menuId;
     private String designerName;
     private String menuName;
     private String customerName;
     private LocalDateTime appointedAt;
 
-    public AppointmentWithNames(UUID id, String designerName, String menuName, String customerName, LocalDateTime appointedAt) {
-        this.id = id;
+    public AppointmentWithNames(UUID appointmentId, UUID designerId, UUID customerId, UUID menuId, String designerName, String menuName, String customerName, LocalDateTime appointedAt) {
+        this.appointmentId = appointmentId;
+        this.designerId = designerId;
+        this.customerId = customerId;
+        this.menuId = menuId;
         this.designerName = designerName;
         this.menuName = menuName;
         this.customerName = customerName;

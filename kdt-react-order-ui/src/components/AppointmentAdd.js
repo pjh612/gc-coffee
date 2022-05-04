@@ -19,10 +19,14 @@ export function AppointmentAdd({onAdd}) {
 
             }
         ).then(
-            v => alert("예약이 추가되었습니다."),
+            response => {
+                console.log(response);
+                alert("예약이 추가되었습니다.");
+                onAdd(appointment, response.data);
+            },
             e => {
                 alert("서버 장애");
-                onAdd(appointment);
+
                 console.error(e);
             })
     }

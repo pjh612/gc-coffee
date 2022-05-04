@@ -16,7 +16,7 @@ export function DesignerAdd({onAdd}) {
                 }
             ).then(
                 v => {alert("디자이너가 추가되었습니다.");
-                    onAdd(designer);
+                    onAdd(designer,v.data.id);
                 },
                 e => {
                     alert("서버 장애");

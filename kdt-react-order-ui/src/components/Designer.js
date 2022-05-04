@@ -29,6 +29,7 @@ export function Designer(props) {
       <div className="row">{name}</div>
     </div>
     <div className="col text-center position">{position}</div>
+    <div className="col text-center position">{joinedAt}</div>
     <button className="btn btn-small btn-outline-dark" onClick={handleSubmit}>삭제</button>
   </>
 }
