@@ -1,6 +1,7 @@
 package com.kdt.hairsalon.service.appointment;
 
 import com.kdt.hairsalon.model.Appointment;
+import com.kdt.hairsalon.repository.appointment.AppointmentWithNames;
 import com.kdt.hairsalon.repository.appointment.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,11 +30,8 @@ public class DefaultAppointmentService implements AppointmentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AppointmentDto> findAll() {
-        return appointmentRepository.findAll()
-                .stream()
-                .map(AppointmentDto::of)
-                .collect(Collectors.toList());
+    public List<AppointmentWithNames> findAll() {
+        return appointmentRepository.findAll();
     }
 
     @Override

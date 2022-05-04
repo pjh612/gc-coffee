@@ -148,7 +148,7 @@ class AppointmentJdbcRepositoryTest {
     @DisplayName("예약정보 전체 조회 테스트")
     void findAllTest() {
         //when
-        List<Appointment> foundAppointments = appointmentRepository.findAll();
+        List<AppointmentWithNames> foundAppointments = appointmentRepository.findAll();
 
         //then
         assertThat(foundAppointments.size(), is(2));

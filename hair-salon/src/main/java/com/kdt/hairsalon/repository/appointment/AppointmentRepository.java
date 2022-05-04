@@ -17,7 +17,7 @@ public interface AppointmentRepository {
 
     List<Appointment> findByDesignerId(UUID designerId);
 
-    List<Appointment> findAll();
+    List<AppointmentWithNames> findAll();
 
     Appointment updateByAppointmentId(Appointment appointment);
 }

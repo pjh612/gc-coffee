@@ -77,8 +77,11 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
     }
 
     @Override
-    public List<Appointment> findAll() {
-        return jdbcTemplate.query("SELECT * FROM appointments", appointmentRowMapper);
+    public List<AppointmentWithNames> findAll() {
+        return jdbcTemplate.query("SELECT ap.appointment_id, c.name, d.name, m.name, ap.appointed_at FROM appointments AS ap " +
+                "join customers AS c on ap.customer_id = c.id " +
+                "join designers AS d on ap.designer_id = d.id " +
+                "join menus AS m on ap.menu_id = m.id", appointmentJoinRowMapper);
     }
 
     @Override
@@ -112,5 +115,15 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
         LocalDateTime appointedAt = toLocalDateTime(resultSet.getTimestamp("appointed_at"));
 
         return new Appointment(appointmentId, menuId, customerId, designerId, appointedAt);
+    };
+
+    private static final RowMapper<AppointmentWithNames> appointmentJoinRowMapper = (resultSet, i) -> {
+        UUID appointmentId = toUUID(resultSet.getBytes("ap.appointment_id"));
+        String menuName = resultSet.getString("m.name");
+        String customerName = resultSet.getString("c.name");
+        String designerName = resultSet.getString("d.name");
+        LocalDateTime appointedAt = toLocalDateTime(resultSet.getTimestamp("ap.appointed_at"));
+
+        return new AppointmentWithNames(appointmentId, designerName, menuName, customerName, appointedAt);
     };
 }
