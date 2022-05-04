@@ -1,15 +1,13 @@
 package com.kdt.hairsalon.controller.api;
 
 import com.kdt.hairsalon.service.designer.DesignerDto;
-
 import com.kdt.hairsalon.service.designer.DesignerService;
-
-import java.util.List;
-import java.util.UUID;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,7 +17,7 @@ public class DesignerRestController {
     private final DesignerService designerService;
 
     @PostMapping("/designers")
-    public ResponseEntity<DesignerDto> create(CreateDesignerRequest request) {
+    public ResponseEntity<DesignerDto> create(@RequestBody CreateDesignerRequest request) {
         return ResponseEntity.ok(designerService.create(request.getName(), request.getPosition()));
     }
 
@@ -40,8 +38,8 @@ public class DesignerRestController {
         return ResponseEntity.ok(id);
     }
 
-    @PatchMapping("/designers/{id}")
-    public ResponseEntity<UUID> deleteById(UpdateDesignerDto request) {
+    @PatchMapping("/designers")
+    public ResponseEntity<UUID> updateById(@RequestBody UpdateDesignerRequest request) {
         return ResponseEntity.ok(designerService.update(request.getId(), request.getName(), request.getPosition()));
     }
 }

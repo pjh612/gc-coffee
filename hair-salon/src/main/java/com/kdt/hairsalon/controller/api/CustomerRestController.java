@@ -19,7 +19,7 @@ public class CustomerRestController {
     private final CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<CustomerDto> join(CustomerJoinRequest request) {
+    public ResponseEntity<CustomerDto> join(@RequestBody CustomerJoinRequest request) {
         return ResponseEntity.ok(customerService.create(request.getName(), request.getEmail(), request.getGender(), request.getBirth()));
     }
 
