@@ -2,16 +2,15 @@ package com.kdt.hairsalon.controller.api;
 
 import com.kdt.hairsalon.service.menu.MenuDto;
 import com.kdt.hairsalon.service.menu.MenuService;
-
-import java.util.List;
-
-import java.util.UUID;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/api/v1")
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class MenuRestController {
 

@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/appointment")
+@RequestMapping("/api/v1/appointments")
 @RequiredArgsConstructor
 public class AppointmentRestController {
 
     private final AppointmentService appointmentService;
 
-    @PostMapping("/")
+    @GetMapping
+    public ResponseEntity<List<AppointmentWithNames>> getAll() {
+        return ResponseEntity.ok(appointmentService.findAll());
+    }
+
+    @PostMapping
     public ResponseEntity<AppointmentDto> makeAppointment(@RequestBody MakeAppointmentRequest request) {
         return ResponseEntity.ok(appointmentService.make(request.getMenuId(), request.getCustomerId(), request.getDesignerId(), request.getAppointedAt()));
     }
