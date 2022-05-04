@@ -60,6 +60,15 @@ public class CustomerJdbcRepository implements CustomerRepository {
         return jdbcTemplate.query("SELECT * FROM customers", productRowMapper);
     }
 
+    @Override
+    public void deleteById(UUID id) {
+        int update = jdbcTemplate.update("DELETE FROM customers WHERE id = UNHEX(REPLACE(:id, '-', ''))",
+                Collections.singletonMap("id", id.toString().getBytes()));
+
+        if (update != 1)
+            throw new RuntimeException("Customer 정보가 삭제되지 않았습니다.");
+    }
+
     private static final RowMapper<Customer> productRowMapper = (resultSet, i) -> {
         UUID id = toUUID(resultSet.getBytes("id"));
         String name = resultSet.getString("name");

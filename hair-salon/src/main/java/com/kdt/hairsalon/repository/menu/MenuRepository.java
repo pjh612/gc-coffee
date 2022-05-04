@@ -11,5 +11,7 @@ public interface MenuRepository {
 
     Optional<Menu> findById(UUID id);
 
+    void deleteById(UUID id);
+
     List<Menu> findAll();
 }

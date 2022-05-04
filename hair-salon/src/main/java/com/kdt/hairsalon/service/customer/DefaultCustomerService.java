@@ -62,4 +62,9 @@ public class DefaultCustomerService implements CustomerService {
                 .map(CustomerDto::of)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteById(UUID id) {
+        customerRepository.deleteById(id);
+    }
 }

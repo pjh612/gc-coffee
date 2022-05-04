@@ -2,16 +2,14 @@ package com.kdt.hairsalon.service.menu;
 
 import com.kdt.hairsalon.model.Menu;
 import com.kdt.hairsalon.repository.menu.MenuRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
 import java.util.stream.Collectors;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +32,13 @@ public class DefaultMenuService implements MenuService {
 
         return MenuDto.of(menu);
     }
+
+    @Override
+    @Transactional
+    public void deleteById(UUID id) {
+        menuRepository.deleteById(id);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<MenuDto> findAll() {

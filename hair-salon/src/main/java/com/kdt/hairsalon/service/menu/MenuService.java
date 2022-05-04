@@ -9,5 +9,7 @@ public interface MenuService {
 
     MenuDto findById(UUID id);
 
+    void deleteById(UUID id);
+
     List<MenuDto> findAll();
 }

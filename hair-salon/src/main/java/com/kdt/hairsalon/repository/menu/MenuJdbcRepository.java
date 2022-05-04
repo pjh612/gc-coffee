@@ -41,6 +41,15 @@ public class MenuJdbcRepository implements MenuRepository {
     }
 
     @Override
+    public void deleteById(UUID id) {
+        int update = jdbcTemplate.update("DELETE FROM menus WHERE id = UNHEX(REPLACE(:id, '-', ''))",
+                Collections.singletonMap("id", id.toString().getBytes()));
+
+        if (update != 1)
+            throw new RuntimeException("메뉴 정보가 삭제되지 않았습니다.");
+    }
+
+    @Override
     public List<Menu> findAll() {
         return jdbcTemplate.query("SELECT * FROM menus", menuRowMapper);
     }

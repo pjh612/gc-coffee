@@ -2,14 +2,12 @@ package com.kdt.hairsalon.controller.api;
 
 import com.kdt.hairsalon.service.customer.CustomerDto;
 import com.kdt.hairsalon.service.customer.CustomerService;
-
-import java.util.UUID;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,5 +38,12 @@ public class CustomerRestController {
     @GetMapping("/name/{name}")
     public ResponseEntity<List<CustomerDto>> getByName(@PathVariable("name") String name) {
         return ResponseEntity.ok(customerService.findByName(name));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UUID> deleteById(@PathVariable("id") UUID id) {
+        customerService.deleteById(id);
+
+        return ResponseEntity.ok(id);
     }
 }

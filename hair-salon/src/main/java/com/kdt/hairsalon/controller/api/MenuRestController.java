@@ -28,6 +28,13 @@ public class MenuRestController {
         return ResponseEntity.ok(insertedMenu);
     }
 
+    @DeleteMapping("/menus/{id}")
+    public ResponseEntity<UUID> deleteById(@PathVariable("id") UUID id) {
+        menuService.deleteById(id);
+
+        return ResponseEntity.ok(id);
+    }
+
     @PostMapping("/menus/{id}")
     public ResponseEntity<MenuDto> getById(@PathVariable("id")UUID id) {
         MenuDto menu = menuService.findById(id);

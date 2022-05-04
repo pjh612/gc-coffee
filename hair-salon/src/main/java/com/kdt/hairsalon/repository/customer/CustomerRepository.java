@@ -16,4 +16,6 @@ public interface CustomerRepository {
     Optional<Customer> findByEmail(String email);
 
     List<Customer> findAll();
+
+    void deleteById(UUID id);
 }

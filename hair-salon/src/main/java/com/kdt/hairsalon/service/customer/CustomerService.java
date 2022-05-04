@@ -17,4 +17,6 @@ public interface CustomerService {
     CustomerDto findByEmail(String email);
 
     List<CustomerDto> findAll();
+
+    void deleteById(UUID id);
 }
