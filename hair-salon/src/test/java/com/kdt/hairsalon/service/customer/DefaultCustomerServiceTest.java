@@ -124,4 +124,17 @@ class DefaultCustomerServiceTest {
         assertThat(foundCustomers.size(), is(2));
         assertThat(foundCustomers, containsInAnyOrder(samePropertyValuesAs(customerA), samePropertyValuesAs(customerB)));
     }
+
+    @Test
+    @DisplayName("Customer 삭제 테스트")
+    void deleteById() {
+        //given
+        CustomerDto customerA = customerService.create("customerA", "customera@gmail.com", Gender.MAN, LocalDate.now());
+
+        //when
+        customerService.deleteById(customerA.getId());
+
+        //then
+        assertThrows(IllegalArgumentException.class, () ->customerService.deleteById(customerA.getId()));
+    }
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ import static com.wix.mysql.ScriptResolver.classPathScript;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -99,7 +101,7 @@ class CustomerJdbcRepositoryTest {
                 LocalDateTime.now()
         );
         //when, then
-        Assertions.assertThrows(DataAccessException.class, () -> customerRepository.insert(duplicatedEmailCustomer));
+        assertThrows(DataAccessException.class, () -> customerRepository.insert(duplicatedEmailCustomer));
 
     }
 
@@ -149,5 +151,16 @@ class CustomerJdbcRepositoryTest {
         //then
         assertThat(customers.size(), is(2));
         assertThat(customers, containsInAnyOrder(samePropertyValuesAs(customerA), samePropertyValuesAs(customerB)));
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("Customer 삭제 테스트")
+    void deleteByIdTest() {
+        //when
+        customerRepository.deleteById(customerA.getId());
+
+        //then
+        assertThrows(EmptyResultDataAccessException.class, () -> customerRepository.findById(customerA.getId()));
     }
 }

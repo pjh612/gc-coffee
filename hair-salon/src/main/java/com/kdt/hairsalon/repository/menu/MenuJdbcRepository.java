@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -33,11 +34,14 @@ public class MenuJdbcRepository implements MenuRepository {
 
     @Override
     public Optional<Menu> findById(UUID id) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("SELECT * FROM menus WHERE id = UNHEX(REPLACE(:id, '-', ''))",
-                        Collections.singletonMap("id", id.toString().getBytes()),
-                        menuRowMapper)
-        );
+        try {
+            return Optional.of(jdbcTemplate.queryForObject("SELECT * FROM menus WHERE id = UNHEX(REPLACE(:id, '-', ''))",
+                    Collections.singletonMap("id", id.toString().getBytes()),
+                    menuRowMapper));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+
     }
 
     @Override

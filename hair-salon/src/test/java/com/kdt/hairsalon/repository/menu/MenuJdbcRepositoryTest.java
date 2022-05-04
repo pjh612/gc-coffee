@@ -8,6 +8,7 @@ import com.wix.mysql.distribution.Version;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ import static com.wix.mysql.ScriptResolver.classPathScript;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -93,5 +95,16 @@ class MenuJdbcRepositoryTest {
         //then
         assertThat(menus.size(), is(3));
         assertThat(menus, containsInAnyOrder(samePropertyValuesAs(menu), samePropertyValuesAs(menuB), samePropertyValuesAs(menuC)));
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Menu 삭제 테스트")
+    void deleteByIdTest() {
+        //when
+        menuRepository.deleteById(menu.getId());
+
+        //then
+        assertThrows(EmptyResultDataAccessException.class, () -> menuRepository.findById(menu.getId()));
     }
 }

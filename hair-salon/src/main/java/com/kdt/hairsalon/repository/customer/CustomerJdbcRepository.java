@@ -3,6 +3,7 @@ package com.kdt.hairsalon.repository.customer;
 import com.kdt.hairsalon.model.Customer;
 import com.kdt.hairsalon.model.Gender;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -32,11 +33,15 @@ public class CustomerJdbcRepository implements CustomerRepository {
 
     @Override
     public Optional<Customer> findById(UUID id) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("SELECT * FROM customers WHERE id = UNHEX(REPLACE(:id, '-', ''))",
-                        Collections.singletonMap("id", id.toString().getBytes()), productRowMapper
-                )
-        );
+        try {
+            return Optional.of(
+                    jdbcTemplate.queryForObject("SELECT * FROM customers WHERE id = UNHEX(REPLACE(:id, '-', ''))",
+                            Collections.singletonMap("id", id.toString().getBytes()), productRowMapper
+                    )
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -48,11 +53,15 @@ public class CustomerJdbcRepository implements CustomerRepository {
 
     @Override
     public Optional<Customer> findByEmail(String email) {
-        return Optional.ofNullable(
-                jdbcTemplate.queryForObject("SELECT * FROM customers WHERE email = :email",
-                        Collections.singletonMap("email", email), productRowMapper
-                )
-        );
+        try {
+            return Optional.ofNullable(
+                    jdbcTemplate.queryForObject("SELECT * FROM customers WHERE email = :email",
+                            Collections.singletonMap("email", email), productRowMapper
+                    )
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
