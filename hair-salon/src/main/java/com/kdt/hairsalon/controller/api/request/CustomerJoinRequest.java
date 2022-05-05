@@ -15,12 +15,10 @@ import java.time.LocalDate;
 public class CustomerJoinRequest {
     @NotBlank
     private String name;
-    @Email
+    @Email(message = "잘못된 이메일 형식입니다.")
     private String email;
-    @NotBlank
     private Gender gender;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd", timezone = "Asia/Seoul")
-    @Past
-    @NotBlank
+    @Past(message = "올바르지 않은 생년월일 입니다. ex) 19960612")
     private LocalDate birth;
 }

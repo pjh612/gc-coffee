@@ -14,6 +14,5 @@ public class UpdateDesignerRequest {
     private  UUID id;
     @NotBlank
     private  String name;
-    @NotBlank
     private  Position position;
 }

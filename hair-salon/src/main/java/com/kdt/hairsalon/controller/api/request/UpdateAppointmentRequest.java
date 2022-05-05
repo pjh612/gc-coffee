@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record UpdateAppointmentRequest(@NotBlank UUID appointmentId, @NotBlank UUID menuId,
-                                       @Future LocalDateTime appointedAt) {
+                                       @Future(message = "잘못된 예약 시간입니다.") LocalDateTime appointedAt) {
 }

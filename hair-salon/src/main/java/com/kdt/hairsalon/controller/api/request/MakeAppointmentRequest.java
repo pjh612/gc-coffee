@@ -19,6 +19,6 @@ public class MakeAppointmentRequest {
     @NotBlank
     private UUID designerId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
-    @Future
+    @Future(message = "잘못된 예약 시간입니다.")
     private LocalDateTime appointedAt;
 }
