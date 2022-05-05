@@ -165,7 +165,7 @@ class DefaultAppointmentServiceTest {
         AppointmentDto toUpdateAppointment = appointmentService.make(menuA.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
 
         //when
-        appointmentService.updatedByAppointmentId(toUpdateAppointment.getAppointmentId(), toUpdateAppointment.getAppointedAt());
+        appointmentService.updateByAppointmentId(toUpdateAppointment.getAppointmentId(), toUpdateAppointment.getStatus(), toUpdateAppointment.getAppointedAt());
         AppointmentDto foundAppointment = appointmentService.findByAppointmentId(toUpdateAppointment.getAppointmentId());
 
         //then

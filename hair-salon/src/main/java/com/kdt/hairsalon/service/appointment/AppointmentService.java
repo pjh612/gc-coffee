@@ -1,5 +1,7 @@
 package com.kdt.hairsalon.service.appointment;
 
+import com.kdt.hairsalon.model.AppointmentStatus;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -18,5 +20,5 @@ public interface AppointmentService {
 
     void deleteByAppointmentId(UUID appointmentId);
 
-    AppointmentDto updatedByAppointmentId(UUID appointmentId, LocalDateTime appointedAt);
+    AppointmentDto updateByAppointmentId(UUID appointmentId, AppointmentStatus status, LocalDateTime appointedAt);
 }

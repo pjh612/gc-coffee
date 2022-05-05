@@ -1,9 +1,6 @@
 package com.kdt.hairsalon.service.appointment;
 
-import com.kdt.hairsalon.model.Appointment;
-import com.kdt.hairsalon.model.Customer;
-import com.kdt.hairsalon.model.Designer;
-import com.kdt.hairsalon.model.Menu;
+import com.kdt.hairsalon.model.*;
 import com.kdt.hairsalon.repository.appointment.AppointmentRepository;
 import com.kdt.hairsalon.repository.customer.CustomerRepository;
 import com.kdt.hairsalon.repository.designer.DesignerRepository;
@@ -32,7 +29,7 @@ public class DefaultAppointmentService implements AppointmentService {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
         Designer designer = designerRepository.findById(designerId).orElseThrow(() -> new IllegalArgumentException("디자이너 정보를 찾을 수 없습니다."));
         Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new IllegalArgumentException("시술메뉴 정보를 찾을 수 없습니다."));
-        Appointment appointment = new Appointment(UUID.randomUUID(), designer, customer, menu, appointedAt);
+        Appointment appointment = new Appointment(UUID.randomUUID(), designer, customer, menu, AppointmentStatus.APPOINTED, appointedAt);
 
         appointmentRepository.insert(appointment);
 
@@ -80,10 +77,11 @@ public class DefaultAppointmentService implements AppointmentService {
 
     @Override
     @Transactional
-    public AppointmentDto updatedByAppointmentId(UUID appointmentId, LocalDateTime appointedAt) {
+    public AppointmentDto updateByAppointmentId(UUID appointmentId, AppointmentStatus status, LocalDateTime appointedAt) {
         Appointment foundAppointment = appointmentRepository.findByAppointmentId(appointmentId).orElseThrow(() -> new IllegalArgumentException("예약 정보를 찾을 수 없습니다."));
 
         foundAppointment.updateAppointedAt(appointedAt);
+        foundAppointment.updateStatus(status);
         return AppointmentDto.of(appointmentRepository.updateByAppointmentId(foundAppointment));
     }
 }

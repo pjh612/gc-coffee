@@ -25,11 +25,12 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
     @Override
     public Appointment insert(Appointment appointment) {
         try {
-            int update = jdbcTemplate.update("INSERT INTO appointments(appointment_id, menu_id, customer_id, designer_id, appointed_at) " +
+            int update = jdbcTemplate.update("INSERT INTO appointments(appointment_id, menu_id, customer_id, designer_id, status, appointed_at) " +
                             "VALUES(UNHEX(REPLACE(:appointmentId, '-', ''))," +
                             " UNHEX(REPLACE(:menuId, '-', ''))," +
                             " UNHEX(REPLACE(:customerId, '-', ''))," +
                             " UNHEX(REPLACE(:designerId, '-', ''))," +
+                            " :status," +
                             " :appointedAt)",
                     toParamMap(appointment));
 
@@ -105,7 +106,7 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
 
     @Override
     public Appointment updateByAppointmentId(Appointment appointment) {
-        int update = jdbcTemplate.update("UPDATE appointments SET menu_id = UNHEX(REPLACE(:menuId, '-', '')), appointed_at = :appointedAt WHERE appointment_id = UNHEX(REPLACE(:appointmentId, '-', ''))",
+        int update = jdbcTemplate.update("UPDATE appointments SET menu_id = UNHEX(REPLACE(:menuId, '-', '')), status = :status, appointed_at = :appointedAt WHERE appointment_id = UNHEX(REPLACE(:appointmentId, '-', ''))",
                 toParamMap(appointment));
 
         if (update != 1)
@@ -121,6 +122,7 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
         paramMap.put("customerId", appointment.getCustomer().getId().toString().getBytes());
         paramMap.put("menuId", appointment.getMenu().getId().toString().getBytes());
         paramMap.put("designerId", appointment.getDesigner().getId().toString().getBytes());
+        paramMap.put("status", appointment.getStatus().toString());
         paramMap.put("appointedAt", appointment.getAppointedAt());
 
         return paramMap;
@@ -128,6 +130,7 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
 
     private static final RowMapper<Appointment> appointmentRowMapper = (resultSet, i) -> {
         UUID appointmentId = toUUID(resultSet.getBytes("ap.appointment_id"));
+        AppointmentStatus status = AppointmentStatus.valueOf(resultSet.getString("ap.status"));
         LocalDateTime appointedAt = toLocalDateTime(resultSet.getTimestamp("ap.appointed_at"));
 
         //menu
@@ -156,6 +159,6 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
         Customer customer = new Customer(customerId, customerName, customerEmail, customerGender, customerBirth, customerCreatedAt, customerUpdatedAt);
         Designer designer = new Designer(designerId, designerName, designerPosition, designerJoinedAt);
 
-        return new Appointment(appointmentId, designer, customer, menu, appointedAt);
+        return new Appointment(appointmentId, designer, customer, menu, status, appointedAt);
     };
 }

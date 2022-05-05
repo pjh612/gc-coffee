@@ -33,7 +33,9 @@ CREATE TABLE appointments
     menu_id        binary(16)  NOT NULL,
     customer_id    binary(16)  NOT NULL,
     designer_id    binary(16)  NOT NULL,
+    status         varchar(20) NOT NULL,
     appointed_at   datetime(6) NOT NULL,
+
     INDEX (designer_id),
 
     CONSTRAINT customer_id_appointed_at_unique UNIQUE (customer_id, appointed_at),

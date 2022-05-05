@@ -47,7 +47,7 @@ public class AppointmentRestController {
     @PatchMapping
     public ResponseEntity<AppointmentDto> updateByAppointmentId(@RequestBody @Valid UpdateAppointmentRequest request) {
         return ResponseEntity.ok(
-                appointmentService.updatedByAppointmentId(request.appointmentId(), request.appointedAt())
+                appointmentService.updateByAppointmentId(request.appointmentId(), request.status(), request.appointedAt())
         );
     }
 

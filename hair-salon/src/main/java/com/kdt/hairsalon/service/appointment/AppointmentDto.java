@@ -1,6 +1,7 @@
 package com.kdt.hairsalon.service.appointment;
 
 import com.kdt.hairsalon.model.Appointment;
+import com.kdt.hairsalon.model.AppointmentStatus;
 import com.kdt.hairsalon.service.customer.CustomerDto;
 import com.kdt.hairsalon.service.designer.DesignerDto;
 import com.kdt.hairsalon.service.menu.MenuDto;
@@ -19,6 +20,7 @@ public class AppointmentDto {
     private final DesignerDto designerDto;
     private final CustomerDto customerDto;
     private final MenuDto menuDto;
+    private final AppointmentStatus status;
     private final LocalDateTime appointedAt;
 
     public static AppointmentDto of(Appointment appointment) {
@@ -26,6 +28,7 @@ public class AppointmentDto {
                 DesignerDto.of(appointment.getDesigner()),
                 CustomerDto.of(appointment.getCustomer()),
                 MenuDto.of(appointment.getMenu()),
+                appointment.getStatus(),
                 appointment.getAppointedAt());
     }
 }

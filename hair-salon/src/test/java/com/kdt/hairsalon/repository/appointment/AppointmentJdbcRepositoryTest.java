@@ -92,7 +92,7 @@ class AppointmentJdbcRepositoryTest {
     @DisplayName("예약 추가 테스트")
     void insertTest() {
         //given
-        Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, LocalDateTime.now());
+        Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, AppointmentStatus.APPOINTED, LocalDateTime.now().plusMinutes(90));
 
         //when
         appointmentRepository.insert(appointmentA);
@@ -107,7 +107,7 @@ class AppointmentJdbcRepositoryTest {
     @DisplayName("예약 정보 삭제 테스트")
     void deleteByAppointmentId() {
         //given
-        Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, LocalDateTime.now());
+        Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, AppointmentStatus.APPOINTED, LocalDateTime.now().plusMinutes(60));
         appointmentRepository.insert(appointmentA);
 
         //when
@@ -119,14 +119,14 @@ class AppointmentJdbcRepositoryTest {
     }
 
     @Test
-    @DisplayName("예약 정보 수정 테스트")
+    @DisplayName("예약 시간 수정 테스트")
     void updateByAppointmentId() {
         //given
-        Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, LocalDateTime.now());
+        Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, AppointmentStatus.APPOINTED, LocalDateTime.now().plusMinutes(30));
         appointmentRepository.insert(appointmentB);
 
         LocalDateTime updatedAppointedAt = LocalDateTime.now();
-        Appointment updatedAppointment = new Appointment(appointmentB.getAppointmentId(), appointmentB.getDesigner(), appointmentB.getCustomer(), appointmentB.getMenu(), updatedAppointedAt);
+        Appointment updatedAppointment = new Appointment(appointmentB.getAppointmentId(), appointmentB.getDesigner(), appointmentB.getCustomer(), appointmentB.getMenu(), AppointmentStatus.APPOINTED, updatedAppointedAt);
 
         //when
         appointmentRepository.updateByAppointmentId(updatedAppointment);
@@ -134,6 +134,44 @@ class AppointmentJdbcRepositoryTest {
 
         //then
         assertThat(foundAppointment.isPresent(), is(true));
+        assertThat(foundAppointment.get(), samePropertyValuesAs(updatedAppointment));
+    }
+
+    @Test
+    @DisplayName("예약상태에서 완료 상태로 변경 테스트")
+    void updateStatusToDone() {
+        //given
+        Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, AppointmentStatus.APPOINTED, LocalDateTime.now().plusMinutes(120));
+        appointmentRepository.insert(appointmentB);
+
+        Appointment updatedAppointment = new Appointment(appointmentB.getAppointmentId(), appointmentB.getDesigner(), appointmentB.getCustomer(), appointmentB.getMenu(), AppointmentStatus.DONE, appointmentB.getAppointedAt());
+
+        //when
+        appointmentRepository.updateByAppointmentId(updatedAppointment);
+        Optional<Appointment> foundAppointment = appointmentRepository.findByAppointmentId(appointmentB.getAppointmentId());
+
+        //then
+        assertThat(foundAppointment.isPresent(), is(true));
+        assertThat(foundAppointment.get().getStatus(), is(AppointmentStatus.DONE));
+        assertThat(foundAppointment.get(), samePropertyValuesAs(updatedAppointment));
+    }
+
+    @Test
+    @DisplayName("예약 상태로 변경 테스트")
+    void updateStatusToAppointed() {
+        //given
+        Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, AppointmentStatus.APPOINTED, LocalDateTime.now().plusMinutes(150));
+        appointmentRepository.insert(appointmentB);
+
+        Appointment updatedAppointment = new Appointment(appointmentB.getAppointmentId(), appointmentB.getDesigner(), appointmentB.getCustomer(), appointmentB.getMenu(), AppointmentStatus.APPOINTED, appointmentB.getAppointedAt());
+
+        //when
+        appointmentRepository.updateByAppointmentId(updatedAppointment);
+        Optional<Appointment> foundAppointment = appointmentRepository.findByAppointmentId(appointmentB.getAppointmentId());
+
+        //then
+        assertThat(foundAppointment.isPresent(), is(true));
+        assertThat(foundAppointment.get().getStatus(), is(AppointmentStatus.APPOINTED));
         assertThat(foundAppointment.get(), samePropertyValuesAs(updatedAppointment));
     }
 }

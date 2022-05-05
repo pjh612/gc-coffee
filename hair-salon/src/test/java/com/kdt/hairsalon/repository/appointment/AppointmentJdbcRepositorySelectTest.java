@@ -64,8 +64,8 @@ class AppointmentJdbcRepositorySelectTest {
             LocalDateTime.now()
     );
 
-    private final Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, LocalDateTime.now());
-    private final Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, LocalDateTime.now());
+    private final Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, AppointmentStatus.APPOINTED, LocalDateTime.now());
+    private final Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, AppointmentStatus.APPOINTED, LocalDateTime.now());
 
     @BeforeAll
     void setup() {
