@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,13 +23,12 @@ import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.ScriptResolver.classPathScript;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
-class AppointmentJdbcRepositoryTest {
+class AppointmentWithNamesJdbcRepositorySelectTest {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -64,6 +64,9 @@ class AppointmentJdbcRepositoryTest {
             LocalDateTime.now()
     );
 
+    private final Appointment appointmentA = new com.kdt.hairsalon.model.Appointment(UUID.randomUUID(), menu.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
+    private final Appointment appointmentB = new com.kdt.hairsalon.model.Appointment(UUID.randomUUID(), menu.getId(), customerB.getId(), designerA.getId(), LocalDateTime.now());
+
     @BeforeAll
     void setup() {
         MysqldConfig config = aMysqldConfig(Version.v5_7_latest)
@@ -80,6 +83,8 @@ class AppointmentJdbcRepositoryTest {
         designerRepository.insert(designerA);
         customerRepository.insert(customerA);
         customerRepository.insert(customerB);
+        appointmentRepository.insert(appointmentA);
+        appointmentRepository.insert(appointmentB);
 
     }
 
@@ -89,13 +94,8 @@ class AppointmentJdbcRepositoryTest {
     }
 
     @Test
-    @DisplayName("예약 추가 테스트")
-    void insertTest() {
-        //given
-        Appointment appointmentA = new Appointment(UUID.randomUUID(), menu.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
-
-        //when
-        appointmentRepository.insert(appointmentA);
+    @DisplayName("예약 단일 조회 테스트")
+    void findByAppointmentIdTest() {
         Optional<Appointment> foundAppointment = appointmentRepository.findByAppointmentId(appointmentA.getAppointmentId());
 
         //then
@@ -104,36 +104,36 @@ class AppointmentJdbcRepositoryTest {
     }
 
     @Test
-    @DisplayName("예약 정보 삭제 테스트")
-    void deleteByAppointmentId() {
-        //given
-        Appointment appointmentA = new Appointment(UUID.randomUUID(), menu.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
-        appointmentRepository.insert(appointmentA);
-
+    @DisplayName("Customer ID로 예약정보 조회 테스트")
+    void findByCustomerIdTest() {
         //when
-        appointmentRepository.deleteByAppointmentId(appointmentA.getAppointmentId());
-        Optional<Appointment> foundAppointment = appointmentRepository.findByAppointmentId(appointmentA.getAppointmentId());
-
-        //then
-        assertThat(foundAppointment.isEmpty(), is(true));
-    }
-
-    @Test
-    @DisplayName("예약 정보 수정 테스트")
-    void updateByAppointmentId() {
-        //given
-        Appointment appointmentB = new Appointment(UUID.randomUUID(), menu.getId(), customerB.getId(), designerA.getId(), LocalDateTime.now());
-        appointmentRepository.insert(appointmentB);
-
-        LocalDateTime updatedAppointedAt = LocalDateTime.now();
-        Appointment updatedAppointment = new Appointment(appointmentB.getAppointmentId(), appointmentB.getMenuId(), appointmentB.getCustomerId(), appointmentB.getDesignerId(), updatedAppointedAt);
-
-        //when
-        appointmentRepository.updateByAppointmentId(updatedAppointment);
-        Optional<Appointment> foundAppointment = appointmentRepository.findByAppointmentId(appointmentB.getAppointmentId());
+        Optional<Appointment> foundAppointment = appointmentRepository.findByCustomerId(customerA.getId());
 
         //then
         assertThat(foundAppointment.isPresent(), is(true));
-        assertThat(foundAppointment.get(), samePropertyValuesAs(updatedAppointment));
+        assertThat(foundAppointment.get(), samePropertyValuesAs(appointmentA));
     }
+
+    @Test
+    @DisplayName("디자이너 정보로 예약 정보 전체 조회 테스트")
+    void findByDesignerIdTest() {
+        //when
+        List<Appointment> foundAppointments = appointmentRepository.findByDesignerId(designerA.getId());
+
+        //then
+        assertThat(foundAppointments.size(), is(2));
+        assertThat(foundAppointments, containsInAnyOrder(samePropertyValuesAs(appointmentA), samePropertyValuesAs(appointmentB)));
+    }
+
+    @Test
+    @DisplayName("예약정보 전체 조회 테스트")
+    void findAllTest() {
+        //when
+        List<Appointment> foundAppointments = appointmentRepository.findAll();
+
+        //then
+        assertThat(foundAppointments.size(), is(2));
+        assertThat(foundAppointments, containsInAnyOrder(samePropertyValuesAs(appointmentA), samePropertyValuesAs(appointmentB)));
+    }
+
 }
