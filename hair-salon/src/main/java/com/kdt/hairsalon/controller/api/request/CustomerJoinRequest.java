@@ -1,4 +1,4 @@
-package com.kdt.hairsalon.controller.api;
+package com.kdt.hairsalon.controller.api.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kdt.hairsalon.model.Gender;

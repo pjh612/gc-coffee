@@ -1,5 +1,6 @@
 package com.kdt.hairsalon.controller.api;
 
+import com.kdt.hairsalon.controller.api.request.CustomerJoinRequest;
 import com.kdt.hairsalon.service.customer.CustomerDto;
 import com.kdt.hairsalon.service.customer.CustomerService;
 import lombok.RequiredArgsConstructor;

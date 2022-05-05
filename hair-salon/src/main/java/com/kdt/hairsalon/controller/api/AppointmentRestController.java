@@ -1,5 +1,7 @@
 package com.kdt.hairsalon.controller.api;
 
+import com.kdt.hairsalon.controller.api.request.MakeAppointmentRequest;
+import com.kdt.hairsalon.controller.api.request.UpdateAppointmentRequest;
 import com.kdt.hairsalon.repository.appointment.AppointmentWithNames;
 import com.kdt.hairsalon.service.appointment.AppointmentDto;
 import com.kdt.hairsalon.service.appointment.AppointmentService;

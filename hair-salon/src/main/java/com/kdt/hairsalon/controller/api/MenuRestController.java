@@ -1,5 +1,6 @@
 package com.kdt.hairsalon.controller.api;
 
+import com.kdt.hairsalon.controller.api.request.CreateMenuRequest;
 import com.kdt.hairsalon.service.menu.MenuDto;
 import com.kdt.hairsalon.service.menu.MenuService;
 import lombok.RequiredArgsConstructor;

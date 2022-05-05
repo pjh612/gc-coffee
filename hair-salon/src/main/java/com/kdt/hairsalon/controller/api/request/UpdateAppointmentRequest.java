@@ -1,4 +1,4 @@
-package com.kdt.hairsalon.controller.api;
+package com.kdt.hairsalon.controller.api.request;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

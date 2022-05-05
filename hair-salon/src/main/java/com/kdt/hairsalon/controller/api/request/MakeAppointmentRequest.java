@@ -1,4 +1,4 @@
-package com.kdt.hairsalon.controller.api;
+package com.kdt.hairsalon.controller.api.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -13,6 +13,8 @@ public class MakeAppointmentRequest {
     private  UUID customerId;
     private  UUID menuId;
     private  UUID designerId;
+
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
     private  LocalDateTime appointedAt;
 }
