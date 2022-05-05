@@ -3,8 +3,6 @@ import axios from "axios";
 
 export function AppointmentAdd({onAdd, appointment, setAppointment,handleDesignerIdInputChanged,handleMenuIdInputChanged,handleCustomerIdInputChanged,handleAppointedAtInputChanged}) {
 
-
-
     const onAddAppointmentSubmit = () => {
         axios.post('http://localhost:8080/api/v1/appointments', {
                 designerId: appointment.designerId,
@@ -24,6 +22,7 @@ export function AppointmentAdd({onAdd, appointment, setAppointment,handleDesigne
                 console.error(e);
             })
     }
+
     const handleSubmit = (e) => {
         if (appointment.designerId === "" || appointment.menuId === "" || appointment.customerId === "" || appointment.appointedAt === "") {
             alert("입력값을 확인해주세요!")
@@ -31,6 +30,7 @@ export function AppointmentAdd({onAdd, appointment, setAppointment,handleDesigne
             onAddAppointmentSubmit(appointment);
         }
     }
+
     return (
         <>
             <div>
@@ -51,7 +51,7 @@ export function AppointmentAdd({onAdd, appointment, setAppointment,handleDesigne
                            id="menuId"/>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="customerId" className="form-label">손님 ID</label>
+                    <label htmlFor="customerId" className="form-label">회원 ID</label>
                     <input type="text" className="form-control mb-1" value={appointment.customerId}
                            onChange={handleCustomerIdInputChanged}
                            id="customerId"/>
