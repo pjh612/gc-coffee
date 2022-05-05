@@ -17,9 +17,9 @@ export function AppointmentAdd({onAdd, appointment, setAppointment,handleDesigne
                 alert("예약이 추가되었습니다.");
             },
             e => {
-                alert("서버 장애");
+                alert(e.response.data);
 
-                console.error(e);
+                console.error(e.response.data);
             })
     }
 
