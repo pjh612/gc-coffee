@@ -46,7 +46,7 @@ export function Appointment(props) {
             </div>
         <div className="col text-center appointedAt">{status}</div>
             <div className="col text-center appointedAt">{appointedAt}</div>
-        {status !== 'DONE' ? <button className="btn btn-small btn-outline-dark" onClick={handleSubmit}>예약 취소</button> : <button className="btn btn-small btn-outline-dark" onClick={handleSubmit}>삭제</button>}
+        <button className="btn btn-small btn-outline-dark" onClick={handleSubmit}>{status !== 'DONE' ? "예약 취소": "항목 제거"}</button>
 
         </>
         }
