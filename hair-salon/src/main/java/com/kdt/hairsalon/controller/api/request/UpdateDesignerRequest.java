@@ -10,7 +10,6 @@ import java.util.UUID;
 @Getter
 @RequiredArgsConstructor
 public class UpdateDesignerRequest {
-    @NotBlank
     private  UUID id;
     @NotBlank
     private  String name;
