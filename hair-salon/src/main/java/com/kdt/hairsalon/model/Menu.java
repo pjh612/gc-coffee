@@ -1,12 +1,13 @@
 package com.kdt.hairsalon.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
 @Getter
+@EqualsAndHashCode
 public class Menu {
     private final UUID id;
     private final String name;

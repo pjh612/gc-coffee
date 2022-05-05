@@ -1,9 +1,13 @@
 package com.kdt.hairsalon.service.menu;
 
 import com.kdt.hairsalon.model.Menu;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.UUID;
 
+@EqualsAndHashCode
+@Getter
 public class MenuDto {
     private final UUID id;
     private final String name;
@@ -13,18 +17,6 @@ public class MenuDto {
         this.id = id;
         this.name = name;
         this.price = price;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getPrice() {
-        return price;
     }
 
     public static MenuDto of(Menu menu) {

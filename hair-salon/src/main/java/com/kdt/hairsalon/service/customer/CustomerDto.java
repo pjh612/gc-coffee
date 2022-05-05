@@ -2,14 +2,15 @@ package com.kdt.hairsalon.service.customer;
 
 import com.kdt.hairsalon.model.Customer;
 import com.kdt.hairsalon.model.Gender;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import lombok.Getter;
-
 @Getter
+@EqualsAndHashCode
 public class CustomerDto {
     private final UUID id;
     private final String name;

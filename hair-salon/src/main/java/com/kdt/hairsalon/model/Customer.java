@@ -1,9 +1,14 @@
 package com.kdt.hairsalon.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@EqualsAndHashCode
 public class Customer {
     private final UUID id;
     private final String name;
@@ -22,33 +27,5 @@ public class Customer {
         this.birth = birth;
         this.createdAt = createdAt.withNano(0);
         this.updatedAt = updatedAt.withNano(0);
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public LocalDate getBirth() {
-        return birth;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
     }
 }

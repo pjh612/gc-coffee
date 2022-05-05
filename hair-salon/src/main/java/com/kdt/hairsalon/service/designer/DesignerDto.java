@@ -2,14 +2,15 @@ package com.kdt.hairsalon.service.designer;
 
 import com.kdt.hairsalon.model.Designer;
 import com.kdt.hairsalon.model.Position;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
 @Getter
+@EqualsAndHashCode
 @RequiredArgsConstructor
 public class DesignerDto {
     private final UUID id;

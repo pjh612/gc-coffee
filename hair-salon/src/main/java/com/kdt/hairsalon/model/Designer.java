@@ -1,11 +1,13 @@
 package com.kdt.hairsalon.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import lombok.Getter;
-
 @Getter
+@EqualsAndHashCode
 public class Designer {
     private final UUID id;
     private final String name;
