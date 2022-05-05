@@ -1,8 +1,9 @@
 package com.kdt.hairsalon.service.appointment;
 
 import com.kdt.hairsalon.model.Appointment;
-import com.kdt.hairsalon.repository.appointment.AppointmentWithNames;
 import com.kdt.hairsalon.repository.appointment.AppointmentRepository;
+import com.kdt.hairsalon.repository.appointment.AppointmentWithNames;
+import com.kdt.hairsalon.repository.appointment.AppointmentWithNamesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +18,12 @@ import java.util.stream.Collectors;
 public class DefaultAppointmentService implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
+    private final AppointmentWithNamesRepository appointmentWithNamesRepository;
 
     @Override
     @Transactional
     public AppointmentDto make(UUID menuId, UUID customerId, UUID designerId, LocalDateTime appointedAt) {
-        Appointment appointment = new Appointment(UUID.randomUUID(), menuId, customerId, designerId, appointedAt);
+        com.kdt.hairsalon.model.Appointment appointment = new Appointment(UUID.randomUUID(), menuId, customerId, designerId, appointedAt);
 
         appointmentRepository.insert(appointment);
 
@@ -31,7 +33,7 @@ public class DefaultAppointmentService implements AppointmentService {
     @Override
     @Transactional(readOnly = true)
     public List<AppointmentWithNames> findAll() {
-        return appointmentRepository.findAll();
+        return appointmentWithNamesRepository.findAll();
     }
 
     @Override
