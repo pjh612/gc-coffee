@@ -25,39 +25,51 @@ function App() {
     ]);
 
     const [appointments, setAppointments] = useState([
-        {appointmentId: 'uuid-1', customerId: '',customerName:'', menuId: '',menuName:'', designerId: '',designerName:'', appointedAt:''},
+        {appointmentId: 'uuid-1', customerDto: '', designerDto: '', menuDto: '', appointedAt: ''},
     ]);
 
     const [customers, setCustomers] = useState([
-        {id: 'uuid-1', name: '', email: '', gender: '', birth:''},
+        {id: 'uuid-1', name: '', email: '', gender: '', birth: ''},
     ]);
 
-    const onMenuAdd = (o,id)=> {
-        o = {...o, id : id};
+    const onMenuAdd = (o, id) => {
+        o = {...o, id: id};
         setMenus(menus.concat(o));
     };
-    const onCustomerAdd = (o,id) => {
-        o = {...o, id : id};
+    const onCustomerAdd = (o, id) => {
+        o = {...o, id: id};
         setCustomers(customers.concat(o));
     };
-    const onDesignerAdd = (o,id) => {
+    const onDesignerAdd = (o, id) => {
         console.log(id);
-        o = {...o, id : id};
+        o = {...o, id: id};
         setDesigners(designers.concat(o));
 
     };
-    const onAppointmentAdd = (o,data) => {
+    const onAppointmentAdd = (o, data) => {
         console.log(data);
-        o = {...o, appointmentId:data.appointmentId, designerName:data.designerName, menuName: data.menuName, customerName:data.customerName};
+        o = {
+            ...o,
+            appointmentId: data.appointmentId,
+            designerName: data.designerName,
+            menuName: data.menuName,
+            customerName: data.customerName
+        };
         setAppointments(appointments.concat(o));
     };
     useEffect(() => {
         axios.get('http://localhost:8080/api/v1/designers')
             .then(v => setDesigners(v.data));
         axios.get('http://localhost:8080/api/v1/menus')
-            .then(v => setMenus(v.data));
+            .then(
+                v => {
+                    setMenus(v.data);
+                }
+            );
         axios.get('http://localhost:8080/api/v1/appointments')
-            .then(v => setAppointments(v.data));
+            .then(v => {
+                setAppointments(v.data)
+            });
         axios.get('http://localhost:8080/api/v1/customers')
             .then(v => setCustomers(v.data));
     }, []);
@@ -73,19 +85,19 @@ function App() {
                         <DesignerList designers={designers} setDesigners={setDesigners}/>
                     </div>
                     <div className="col-md-4 summary p-4">
-                        <DesignerAdd onAdd={onDesignerAdd} />
+                        <DesignerAdd onAdd={onDesignerAdd}/>
                     </div>
                     <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
                         <MenuList menus={menus} setMenus={setMenus}/>
                     </div>
                     <div className="col-md-4 summary p-4">
-                        <MenuAdd onAdd={onMenuAdd} />
+                        <MenuAdd onAdd={onMenuAdd}/>
                     </div>
                     <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
                         <AppointmentList appointments={appointments} setAppointments={setAppointments}/>
                     </div>
                     <div className="col-md-4 summary p-4">
-                        <AppointmentAdd onAdd={onAppointmentAdd} />
+                        <AppointmentAdd onAdd={onAppointmentAdd}/>
                     </div>
 
                     <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">

@@ -28,7 +28,7 @@ class DefaultMenuServiceTest {
     @Autowired
     private MenuService menuService;
 
-    private  EmbeddedMysql embeddedMySql;
+    private EmbeddedMysql embeddedMySql;
 
     @BeforeAll
     void setup() {
@@ -45,7 +45,7 @@ class DefaultMenuServiceTest {
     }
 
     @AfterAll
-     void cleanUp() {
+    void cleanUp() {
         embeddedMySql.stop();
     }
 
@@ -85,7 +85,7 @@ class DefaultMenuServiceTest {
 
         //then
         assertThat(foundMenus.size(), is(2));
-        assertThat(foundMenus, containsInAnyOrder(samePropertyValuesAs(menuA),samePropertyValuesAs(menuB)));
+        assertThat(foundMenus, containsInAnyOrder(samePropertyValuesAs(menuA), samePropertyValuesAs(menuB)));
     }
 
     @Test
@@ -98,6 +98,6 @@ class DefaultMenuServiceTest {
         menuService.deleteById(menuA.getId());
 
         //then
-        assertThrows(IllegalArgumentException.class, () ->menuService.findById(menuA.getId()));
+        assertThrows(IllegalArgumentException.class, () -> menuService.findById(menuA.getId()));
     }
 }

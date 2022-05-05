@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
-class AppointmentWithNamesJdbcRepositorySelectTest {
+class AppointmentJdbcRepositorySelectTest {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
@@ -64,8 +64,8 @@ class AppointmentWithNamesJdbcRepositorySelectTest {
             LocalDateTime.now()
     );
 
-    private final Appointment appointmentA = new com.kdt.hairsalon.model.Appointment(UUID.randomUUID(), menu.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
-    private final Appointment appointmentB = new com.kdt.hairsalon.model.Appointment(UUID.randomUUID(), menu.getId(), customerB.getId(), designerA.getId(), LocalDateTime.now());
+    private final Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, LocalDateTime.now());
+    private final Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, LocalDateTime.now());
 
     @BeforeAll
     void setup() {

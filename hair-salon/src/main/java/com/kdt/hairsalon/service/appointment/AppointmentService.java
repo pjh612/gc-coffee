@@ -1,7 +1,5 @@
 package com.kdt.hairsalon.service.appointment;
 
-import com.kdt.hairsalon.repository.appointment.AppointmentWithNames;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +8,7 @@ public interface AppointmentService {
 
     AppointmentDto make(UUID menuId, UUID customerId, UUID designerId, LocalDateTime appointedAt);
 
-    List<AppointmentWithNames> findAll();
+    List<AppointmentDto> findAll();
 
     AppointmentDto findByAppointmentId(UUID appointmentId);
 

@@ -8,17 +8,16 @@ import java.util.UUID;
 @Getter
 public class Appointment {
     private final UUID appointmentId;
-    private final UUID menuId;
-    private final UUID customerId;
-    private final UUID designerId;
+    private final Designer designer;
+    private final Customer customer;
+    private final Menu menu;
     private LocalDateTime appointedAt;
 
-    public Appointment(UUID appointmentId, UUID menuId, UUID customerId, UUID designerId,
-                       LocalDateTime appointedAt) {
+    public Appointment(UUID appointmentId, Designer designer, Customer customer, Menu menu, LocalDateTime appointedAt) {
         this.appointmentId = appointmentId;
-        this.menuId = menuId;
-        this.customerId = customerId;
-        this.designerId = designerId;
+        this.designer = designer;
+        this.customer = customer;
+        this.menu = menu;
         this.appointedAt = appointedAt.withNano(0);
     }
 

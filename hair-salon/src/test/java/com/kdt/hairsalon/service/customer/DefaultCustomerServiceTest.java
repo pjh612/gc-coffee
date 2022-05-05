@@ -5,10 +5,7 @@ import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.config.Charset;
 import com.wix.mysql.config.MysqldConfig;
 import com.wix.mysql.distribution.Version;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
@@ -48,6 +45,11 @@ class DefaultCustomerServiceTest {
                 .addSchema("test-hair_salon", classPathScript("schema.sql"))
                 .start();
 
+    }
+
+    @AfterAll
+    static void cleanup() {
+        embeddedMySql.stop();
     }
 
     @Test
@@ -135,6 +137,6 @@ class DefaultCustomerServiceTest {
         customerService.deleteById(customerA.getId());
 
         //then
-        assertThrows(IllegalArgumentException.class, () ->customerService.deleteById(customerA.getId()));
+        assertThrows(RuntimeException.class, () ->customerService.deleteById(customerA.getId()));
     }
 }

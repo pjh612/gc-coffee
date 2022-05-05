@@ -2,7 +2,6 @@ package com.kdt.hairsalon.controller.api;
 
 import com.kdt.hairsalon.controller.api.request.MakeAppointmentRequest;
 import com.kdt.hairsalon.controller.api.request.UpdateAppointmentRequest;
-import com.kdt.hairsalon.repository.appointment.AppointmentWithNames;
 import com.kdt.hairsalon.service.appointment.AppointmentDto;
 import com.kdt.hairsalon.service.appointment.AppointmentService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class AppointmentRestController {
     private final AppointmentService appointmentService;
 
     @GetMapping
-    public ResponseEntity<List<AppointmentWithNames>> getAll() {
+    public ResponseEntity<List<AppointmentDto>> getAll() {
         return ResponseEntity.ok(appointmentService.findAll());
     }
 

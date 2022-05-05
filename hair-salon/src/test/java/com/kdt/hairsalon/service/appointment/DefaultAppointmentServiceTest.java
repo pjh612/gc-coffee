@@ -2,7 +2,6 @@ package com.kdt.hairsalon.service.appointment;
 
 import com.kdt.hairsalon.model.Gender;
 import com.kdt.hairsalon.model.Position;
-import com.kdt.hairsalon.repository.appointment.AppointmentWithNames;
 import com.kdt.hairsalon.service.customer.CustomerDto;
 import com.kdt.hairsalon.service.customer.CustomerService;
 import com.kdt.hairsalon.service.designer.DesignerDto;
@@ -99,7 +98,7 @@ class DefaultAppointmentServiceTest {
         AppointmentDto appointmentA = appointmentService.make(menuA.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
         AppointmentDto appointmentB = appointmentService.make(menuA.getId(), customerB.getId(), designerA.getId(), LocalDateTime.now());
 
-        List<AppointmentWithNames> foundAppointments = appointmentService.findAll();
+        List<AppointmentDto> foundAppointments = appointmentService.findAll();
 
         assertThat(foundAppointments.size(), is(2));
         assertThat(foundAppointments, containsInAnyOrder(samePropertyValuesAs(appointmentA), samePropertyValuesAs(appointmentB)));
@@ -170,7 +169,7 @@ class DefaultAppointmentServiceTest {
         AppointmentDto foundAppointment = appointmentService.findByAppointmentId(toUpdateAppointment.getAppointmentId());
 
         //then
-        assertThat(foundAppointment.getMenuId(), is(menuA.getId()));
+        assertThat(foundAppointment.getMenuDto().getId(), is(menuA.getId()));
         assertThat(foundAppointment.getAppointmentId(), is(toUpdateAppointment.getAppointmentId()));
         assertThat(foundAppointment.getAppointedAt(), is(toUpdateAppointment.getAppointedAt()));
     }

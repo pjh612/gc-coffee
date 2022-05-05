@@ -92,7 +92,7 @@ class AppointmentJdbcRepositoryTest {
     @DisplayName("예약 추가 테스트")
     void insertTest() {
         //given
-        Appointment appointmentA = new Appointment(UUID.randomUUID(), menu.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
+        Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, LocalDateTime.now());
 
         //when
         appointmentRepository.insert(appointmentA);
@@ -107,7 +107,7 @@ class AppointmentJdbcRepositoryTest {
     @DisplayName("예약 정보 삭제 테스트")
     void deleteByAppointmentId() {
         //given
-        Appointment appointmentA = new Appointment(UUID.randomUUID(), menu.getId(), customerA.getId(), designerA.getId(), LocalDateTime.now());
+        Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, LocalDateTime.now());
         appointmentRepository.insert(appointmentA);
 
         //when
@@ -122,11 +122,11 @@ class AppointmentJdbcRepositoryTest {
     @DisplayName("예약 정보 수정 테스트")
     void updateByAppointmentId() {
         //given
-        Appointment appointmentB = new Appointment(UUID.randomUUID(), menu.getId(), customerB.getId(), designerA.getId(), LocalDateTime.now());
+        Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, LocalDateTime.now());
         appointmentRepository.insert(appointmentB);
 
         LocalDateTime updatedAppointedAt = LocalDateTime.now();
-        Appointment updatedAppointment = new Appointment(appointmentB.getAppointmentId(), appointmentB.getMenuId(), appointmentB.getCustomerId(), appointmentB.getDesignerId(), updatedAppointedAt);
+        Appointment updatedAppointment = new Appointment(appointmentB.getAppointmentId(), appointmentB.getDesigner(), appointmentB.getCustomer(), appointmentB.getMenu(), updatedAppointedAt);
 
         //when
         appointmentRepository.updateByAppointmentId(updatedAppointment);

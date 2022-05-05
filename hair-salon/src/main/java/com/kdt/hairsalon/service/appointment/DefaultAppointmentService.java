@@ -1,9 +1,13 @@
 package com.kdt.hairsalon.service.appointment;
 
 import com.kdt.hairsalon.model.Appointment;
+import com.kdt.hairsalon.model.Customer;
+import com.kdt.hairsalon.model.Designer;
+import com.kdt.hairsalon.model.Menu;
 import com.kdt.hairsalon.repository.appointment.AppointmentRepository;
-import com.kdt.hairsalon.repository.appointment.AppointmentWithNames;
-import com.kdt.hairsalon.repository.appointment.AppointmentWithNamesRepository;
+import com.kdt.hairsalon.repository.customer.CustomerRepository;
+import com.kdt.hairsalon.repository.designer.DesignerRepository;
+import com.kdt.hairsalon.repository.menu.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +22,17 @@ import java.util.stream.Collectors;
 public class DefaultAppointmentService implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
-    private final AppointmentWithNamesRepository appointmentWithNamesRepository;
+    private final CustomerRepository customerRepository;
+    private final MenuRepository menuRepository;
+    private final DesignerRepository designerRepository;
 
     @Override
     @Transactional
     public AppointmentDto make(UUID menuId, UUID customerId, UUID designerId, LocalDateTime appointedAt) {
-        com.kdt.hairsalon.model.Appointment appointment = new Appointment(UUID.randomUUID(), menuId, customerId, designerId, appointedAt);
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
+        Designer designer = designerRepository.findById(designerId).orElseThrow(() -> new IllegalArgumentException("디자이너 정보를 찾을 수 없습니다."));
+        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new IllegalArgumentException("시술메뉴 정보를 찾을 수 없습니다."));
+        Appointment appointment = new Appointment(UUID.randomUUID(), designer,customer,menu, appointedAt);
 
         appointmentRepository.insert(appointment);
 
@@ -32,8 +41,11 @@ public class DefaultAppointmentService implements AppointmentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AppointmentWithNames> findAll() {
-        return appointmentWithNamesRepository.findAll();
+    public List<AppointmentDto> findAll() {
+        return appointmentRepository.findAll()
+                .stream()
+                .map(AppointmentDto::of)
+                .collect(Collectors.toList());
     }
 
     @Override

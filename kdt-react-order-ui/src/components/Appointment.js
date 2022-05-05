@@ -3,12 +3,12 @@ import axios from "axios";
 
 export function Appointment(props) {
     const appointmentId = props.appointmentId;
-    const designerId = props.designerId;
-    const menuId = props.menuId;
-    const customerId = props.customerId;
-    const designerName = props.designerName;
-    const menuName = props.menuName;
-    const customerName = props.customerName;
+    const designerId = props.designerDto.id;
+    const menuId = props.menuDto.id;
+    const customerId = props.customerDto.id;
+    const designerName = props.designerDto.name;
+    const menuName = props.menuDto.name;
+    const customerName = props.customerDto.name;
     const appointedAt = props.appointedAt;
 
     const handleSubmit = (e) => {
