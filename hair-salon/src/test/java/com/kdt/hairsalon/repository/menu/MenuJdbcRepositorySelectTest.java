@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,18 +19,22 @@ import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.ScriptResolver.classPathScript;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("test")
-class MenuJdbcRepositoryTest {
+class MenuJdbcRepositorySelectTest {
 
     @Autowired
     private MenuRepository menuRepository;
 
     private static EmbeddedMysql embeddedMySql;
+
+
+    private final Menu menuA = new Menu(UUID.randomUUID(), "menuA", 1000, LocalDateTime.now(), LocalDateTime.now());
+    private final Menu menuB = new Menu(UUID.randomUUID(), "menuB", 1000, LocalDateTime.now(), LocalDateTime.now());
+    private final Menu menuC = new Menu(UUID.randomUUID(), "menuC", 1000, LocalDateTime.now(), LocalDateTime.now());
 
     @BeforeAll
     void setup() {
@@ -42,7 +47,9 @@ class MenuJdbcRepositoryTest {
         embeddedMySql = anEmbeddedMysql(config)
                 .addSchema("test-hair_salon", classPathScript("schema.sql"))
                 .start();
-
+        menuRepository.insert(menuA);
+        menuRepository.insert(menuB);
+        menuRepository.insert(menuC);
     }
 
     @AfterAll
@@ -50,33 +57,27 @@ class MenuJdbcRepositoryTest {
         embeddedMySql.stop();
     }
 
+
     @Test
-    @DisplayName("시술 메뉴를 추가할 수 있다.")
-    void insertTest() {
-        //given
-        Menu menu = new Menu(UUID.randomUUID(), "menuA", 1000, LocalDateTime.now(), LocalDateTime.now());
+    @DisplayName("메뉴를 ID로 조회할 수 있다.")
+    void findByIdTest() {
+
 
         //when
-        menuRepository.insert(menu);
-        Optional<Menu> foundMenu = menuRepository.findById(menu.getId());
+        Optional<Menu> foundMenu = menuRepository.findById(menuA.getId());
 
         //then
         assertThat(foundMenu.isPresent(), is(true));
-        assertThat(foundMenu.get(), samePropertyValuesAs(menu));
+        assertThat(foundMenu.get(), samePropertyValuesAs(menuA));
     }
 
     @Test
-    @DisplayName("Menu 삭제 테스트")
-    void deleteByIdTest() {
-        //given
-        Menu menu = new Menu(UUID.randomUUID(), "menuB", 1000, LocalDateTime.now(), LocalDateTime.now());
-        menuRepository.insert(menu);
-
+    void findAllTest() {
         //when
-        menuRepository.deleteById(menu.getId());
-        Optional<Menu> foundMenu = menuRepository.findById(menu.getId());
+        List<Menu> menus = menuRepository.findAll();
 
         //then
-        assertThat(foundMenu.isEmpty(), is(true));
+        assertThat(menus.size(), is(3));
+        assertThat(menus, containsInAnyOrder(samePropertyValuesAs(menuA), samePropertyValuesAs(menuB), samePropertyValuesAs(menuC)));
     }
 }
