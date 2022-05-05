@@ -1,7 +1,9 @@
 package com.kdt.hairsalon.repository.appointment;
 
+import com.kdt.hairsalon.controller.api.exception.NotValidAppointmentInsertException;
 import com.kdt.hairsalon.model.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -22,19 +24,23 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
 
     @Override
     public Appointment insert(Appointment appointment) {
-        int update = jdbcTemplate.update("INSERT INTO appointments(appointment_id, menu_id, customer_id, designer_id, appointed_at) " +
-                        "VALUES(UNHEX(REPLACE(:appointmentId, '-', ''))," +
-                        " UNHEX(REPLACE(:menuId, '-', ''))," +
-                        " UNHEX(REPLACE(:customerId, '-', ''))," +
-                        " UNHEX(REPLACE(:designerId, '-', ''))," +
-                        " :appointedAt)",
-                toParamMap(appointment));
+        try {
+            int update = jdbcTemplate.update("INSERT INTO appointments(appointment_id, menu_id, customer_id, designer_id, appointed_at) " +
+                            "VALUES(UNHEX(REPLACE(:appointmentId, '-', ''))," +
+                            " UNHEX(REPLACE(:menuId, '-', ''))," +
+                            " UNHEX(REPLACE(:customerId, '-', ''))," +
+                            " UNHEX(REPLACE(:designerId, '-', ''))," +
+                            " :appointedAt)",
+                    toParamMap(appointment));
 
-        if (update != 1) {
-            throw new RuntimeException("데이터 저장에 실패 했습니다.");
+            if (update != 1) {
+                throw new RuntimeException("데이터 저장에 실패 했습니다.");
+            }
+
+            return appointment;
+        } catch (DuplicateKeyException e) {
+            throw new NotValidAppointmentInsertException("같은 시간에 이미 예약한 회원 입니다.",e);
         }
-
-        return appointment;
     }
 
     @Override

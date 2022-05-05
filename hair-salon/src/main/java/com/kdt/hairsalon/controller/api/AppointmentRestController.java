@@ -47,4 +47,6 @@ public class AppointmentRestController {
 
         return ResponseEntity.ok().build();
     }
+
+
 }

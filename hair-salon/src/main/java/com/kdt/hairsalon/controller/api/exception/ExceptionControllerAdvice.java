@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class ValidationExceptionHandler {
+public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
@@ -23,6 +23,13 @@ public class ValidationExceptionHandler {
                 .stream()
                 .map(ValidationError::of)
                 .collect(Collectors.toList()));
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NotValidAppointmentInsertException.class)
+    @ResponseBody
+    public ResponseEntity<String> handleNotValidAppointmentInsertException(NotValidAppointmentInsertException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
 }
