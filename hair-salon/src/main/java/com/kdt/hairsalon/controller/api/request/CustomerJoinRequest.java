@@ -18,7 +18,7 @@ public class CustomerJoinRequest {
     @Email(message = "잘못된 이메일 형식입니다.")
     private String email;
     private Gender gender;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @Past(message = "올바르지 않은 생년월일 입니다. ex) 19960612")
     private LocalDate birth;
 }
