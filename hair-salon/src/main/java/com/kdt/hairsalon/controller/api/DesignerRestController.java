@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class DesignerRestController {
     private final DesignerService designerService;
 
     @PostMapping("/designers")
-    public ResponseEntity<DesignerDto> create(@RequestBody CreateDesignerRequest request) {
+    public ResponseEntity<DesignerDto> create(@RequestBody @Valid CreateDesignerRequest request) {
         return ResponseEntity.ok(designerService.create(request.getName(), request.getPosition()));
     }
 
@@ -41,7 +42,7 @@ public class DesignerRestController {
     }
 
     @PatchMapping("/designers")
-    public ResponseEntity<UUID> updateById(@RequestBody UpdateDesignerRequest request) {
+    public ResponseEntity<UUID> updateById(@RequestBody @Valid UpdateDesignerRequest request) {
         return ResponseEntity.ok(designerService.update(request.getId(), request.getName(), request.getPosition()));
     }
 }

@@ -5,19 +5,22 @@ import com.kdt.hairsalon.model.Gender;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Getter
 public class CustomerJoinRequest {
+    @NotBlank
     private String name;
+    @Email
     private String email;
+    @NotBlank
     private Gender gender;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd", timezone = "Asia/Seoul")
+    @Past
+    @NotBlank
     private LocalDate birth;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-
 }

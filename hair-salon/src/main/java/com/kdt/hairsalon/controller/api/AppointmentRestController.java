@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class AppointmentRestController {
     }
 
     @PostMapping
-    public ResponseEntity<AppointmentDto> makeAppointment(@RequestBody MakeAppointmentRequest request) {
+    public ResponseEntity<AppointmentDto> makeAppointment(@RequestBody @Valid MakeAppointmentRequest request) {
         return ResponseEntity.ok(appointmentService.make(request.getMenuId(), request.getCustomerId(), request.getDesignerId(), request.getAppointedAt()));
     }
 
@@ -35,7 +36,7 @@ public class AppointmentRestController {
     }
 
     @PatchMapping
-    public ResponseEntity<AppointmentDto> updateByAppointmentId(@RequestBody UpdateAppointmentRequest request) {
+    public ResponseEntity<AppointmentDto> updateByAppointmentId(@RequestBody @Valid UpdateAppointmentRequest request) {
         return ResponseEntity.ok(
                 appointmentService.updatedByAppointmentId(request.appointmentId(), request.appointedAt())
         );

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class CustomerRestController {
     private final CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<CustomerDto> join(@RequestBody CustomerJoinRequest request) {
+    public ResponseEntity<CustomerDto> join(@RequestBody @Valid CustomerJoinRequest request) {
         return ResponseEntity.ok(customerService.create(request.getName(), request.getEmail(), request.getGender(), request.getBirth()));
     }
 

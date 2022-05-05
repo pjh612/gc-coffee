@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class MenuRestController {
     }
 
     @PostMapping("/menus")
-    public ResponseEntity<MenuDto> create(@RequestBody CreateMenuRequest request) {
+    public ResponseEntity<MenuDto> create(@RequestBody @Valid CreateMenuRequest request) {
         MenuDto insertedMenu = menuService.insert(request.getName(), request.getPrice());
 
         return ResponseEntity.ok(insertedMenu);
