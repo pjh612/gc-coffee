@@ -14,34 +14,34 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/designers")
 public class DesignerRestController {
 
     private final DesignerService designerService;
 
-    @PostMapping("/designers")
+    @PostMapping
     public ResponseEntity<DesignerDto> create(@RequestBody @Valid CreateDesignerRequest request) {
         return ResponseEntity.ok(designerService.create(request.getName(), request.getPosition()));
     }
 
-    @GetMapping("/designers/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<DesignerDto> getById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(designerService.findById(id));
     }
 
-    @GetMapping("/designers")
+    @GetMapping
     public ResponseEntity<List<DesignerDto>> getAll() {
         return ResponseEntity.ok(designerService.findAll());
     }
 
-    @DeleteMapping("/designers/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<UUID> deleteById(@PathVariable("id") UUID id) {
         designerService.deleteById(id);
 
         return ResponseEntity.ok(id);
     }
 
-    @PatchMapping("/designers")
+    @PatchMapping
     public ResponseEntity<UUID> updateById(@RequestBody @Valid UpdateDesignerRequest request) {
         return ResponseEntity.ok(designerService.update(request.getId(), request.getName(), request.getPosition()));
     }
