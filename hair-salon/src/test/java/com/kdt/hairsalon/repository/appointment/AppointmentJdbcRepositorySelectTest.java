@@ -66,6 +66,7 @@ class AppointmentJdbcRepositorySelectTest {
 
     private final Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, AppointmentStatus.APPOINTED, LocalDateTime.now());
     private final Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, AppointmentStatus.APPOINTED, LocalDateTime.now());
+    private final Appointment appointmentC = new Appointment(UUID.randomUUID(), designerA, customerB, menu, AppointmentStatus.DONE, LocalDateTime.now().plusMinutes(30));
 
     @BeforeAll
     void setup() {
@@ -85,6 +86,7 @@ class AppointmentJdbcRepositorySelectTest {
         customerRepository.insert(customerB);
         appointmentRepository.insert(appointmentA);
         appointmentRepository.insert(appointmentB);
+        appointmentRepository.insert(appointmentC);
 
     }
 
@@ -121,8 +123,8 @@ class AppointmentJdbcRepositorySelectTest {
         List<Appointment> foundAppointments = appointmentRepository.findByDesignerId(designerA.getId());
 
         //then
-        assertThat(foundAppointments.size(), is(2));
-        assertThat(foundAppointments, containsInAnyOrder(samePropertyValuesAs(appointmentA), samePropertyValuesAs(appointmentB)));
+        assertThat(foundAppointments.size(), is(3));
+        assertThat(foundAppointments, containsInAnyOrder(samePropertyValuesAs(appointmentA), samePropertyValuesAs(appointmentB), samePropertyValuesAs(appointmentC)));
     }
 
     @Test
@@ -132,8 +134,29 @@ class AppointmentJdbcRepositorySelectTest {
         List<Appointment> foundAppointments = appointmentRepository.findAll();
 
         //then
+        assertThat(foundAppointments.size(), is(3));
+        assertThat(foundAppointments, containsInAnyOrder(samePropertyValuesAs(appointmentA), samePropertyValuesAs(appointmentB), samePropertyValuesAs(appointmentC)));
+    }
+
+    @Test
+    @DisplayName("예약 완료 상태인 예약 조회")
+    void findAllAppointedStatusAppointment() {
+        //when
+        List<Appointment> foundAppointments = appointmentRepository.findByStatus(AppointmentStatus.APPOINTED);
+
+        //then
         assertThat(foundAppointments.size(), is(2));
         assertThat(foundAppointments, containsInAnyOrder(samePropertyValuesAs(appointmentA), samePropertyValuesAs(appointmentB)));
     }
 
+    @Test
+    @DisplayName("방문 완료 상태인 예약 조회")
+    void findAllDoneStatusAppointment() {
+        //when
+        List<Appointment> foundAppointments = appointmentRepository.findByStatus(AppointmentStatus.DONE);
+
+        //then
+        assertThat(foundAppointments.size(), is(1));
+        assertThat(foundAppointments, containsInAnyOrder(samePropertyValuesAs(appointmentC)));
+    }
 }

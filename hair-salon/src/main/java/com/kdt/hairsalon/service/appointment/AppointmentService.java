@@ -18,6 +18,8 @@ public interface AppointmentService {
 
     List<AppointmentDto> findByDesignerId(UUID designerId);
 
+    List<AppointmentDto> findByStatus(AppointmentStatus status);
+
     void deleteByAppointmentId(UUID appointmentId);
 
     AppointmentDto updateByAppointmentId(UUID appointmentId, AppointmentStatus status, LocalDateTime appointedAt);

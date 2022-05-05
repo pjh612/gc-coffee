@@ -1,6 +1,7 @@
 package com.kdt.hairsalon.repository.appointment;
 
 import com.kdt.hairsalon.model.Appointment;
+import com.kdt.hairsalon.model.AppointmentStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,8 @@ public interface AppointmentRepository {
     Optional<Appointment> findByAppointmentId(UUID appointmentId);
 
     Optional<Appointment> findByCustomerId(UUID customerId);
+
+    List<Appointment> findByStatus(AppointmentStatus status);
 
     List<Appointment> findByDesignerId(UUID designerId);
 

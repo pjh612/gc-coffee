@@ -2,6 +2,7 @@ package com.kdt.hairsalon.controller.api;
 
 import com.kdt.hairsalon.controller.api.request.MakeAppointmentRequest;
 import com.kdt.hairsalon.controller.api.request.UpdateAppointmentRequest;
+import com.kdt.hairsalon.model.AppointmentStatus;
 import com.kdt.hairsalon.service.appointment.AppointmentDto;
 import com.kdt.hairsalon.service.appointment.AppointmentService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,12 @@ public class AppointmentRestController {
     public ResponseEntity<AppointmentDto> getByCustomerId(@PathVariable("customerId") UUID id) {
         return ResponseEntity.ok(appointmentService.findByCustomerId(id));
     }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<AppointmentDto>> getByCustomerId(@PathVariable("status")AppointmentStatus status) {
+        return ResponseEntity.ok(appointmentService.findByStatus(status));
+    }
+
 
     @GetMapping("/{appointmentId}")
     public ResponseEntity<AppointmentDto> getByAppointmentId(@PathVariable("appointmentId") UUID id) {

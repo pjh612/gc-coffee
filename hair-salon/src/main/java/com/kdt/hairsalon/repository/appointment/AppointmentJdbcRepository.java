@@ -87,6 +87,16 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
     }
 
     @Override
+    public List<Appointment> findByStatus(AppointmentStatus status) {
+        return jdbcTemplate.query("SELECT * FROM appointments AS ap " +
+                        "join customers AS c on ap.customer_id = c.id " +
+                        "join designers AS d on ap.designer_id = d.id " +
+                        "join menus AS m on ap.menu_id = m.id " +
+                        "WHERE ap.status = :status",
+                Collections.singletonMap("status", status.toString()), appointmentRowMapper);
+    }
+
+    @Override
     public List<Appointment> findByDesignerId(UUID designerId) {
         return jdbcTemplate.query("SELECT * FROM appointments AS ap " +
                         "join customers AS c on ap.customer_id = c.id " +

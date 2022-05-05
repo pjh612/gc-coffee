@@ -62,8 +62,18 @@ public class DefaultAppointmentService implements AppointmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AppointmentDto> findByDesignerId(UUID designerId) {
         return appointmentRepository.findByDesignerId(designerId)
+                .stream()
+                .map(AppointmentDto::of)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AppointmentDto> findByStatus(AppointmentStatus status) {
+        return appointmentRepository.findByStatus(status)
                 .stream()
                 .map(AppointmentDto::of)
                 .collect(Collectors.toList());
