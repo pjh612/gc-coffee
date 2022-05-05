@@ -29,9 +29,19 @@ public class AppointmentRestController {
         return ResponseEntity.ok(appointmentService.make(request.getMenuId(), request.getCustomerId(), request.getDesignerId(), request.getAppointedAt()));
     }
 
-    @GetMapping("/{designerId}")
+    @GetMapping("/designer/{designerId}")
     public ResponseEntity<List<AppointmentDto>> getByDesignerId(@PathVariable("designerId") UUID id) {
         return ResponseEntity.ok(appointmentService.findByDesignerId(id));
+    }
+
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<AppointmentDto> getByCustomerId(@PathVariable("customerId") UUID id) {
+        return ResponseEntity.ok(appointmentService.findByCustomerId(id));
+    }
+
+    @GetMapping("/{appointmentId}")
+    public ResponseEntity<AppointmentDto> getByAppointmentId(@PathVariable("appointmentId") UUID id) {
+        return ResponseEntity.ok(appointmentService.findByAppointmentId(id));
     }
 
     @PatchMapping
