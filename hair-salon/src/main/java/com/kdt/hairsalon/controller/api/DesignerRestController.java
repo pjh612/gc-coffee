@@ -25,12 +25,12 @@ public class DesignerRestController {
     }
 
     @GetMapping("/designers/{id}")
-    public ResponseEntity<DesignerDto> getById(@PathVariable("id")UUID id){
+    public ResponseEntity<DesignerDto> getById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(designerService.findById(id));
     }
 
     @GetMapping("/designers")
-    public ResponseEntity<List<DesignerDto>> getAll(){
+    public ResponseEntity<List<DesignerDto>> getAll() {
         return ResponseEntity.ok(designerService.findAll());
     }
 

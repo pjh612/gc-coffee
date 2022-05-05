@@ -10,8 +10,8 @@ import java.util.UUID;
 @Getter
 @RequiredArgsConstructor
 public class UpdateDesignerRequest {
-    private  UUID id;
+    private UUID id;
     @NotBlank
-    private  String name;
-    private  Position position;
+    private String name;
+    private Position position;
 }

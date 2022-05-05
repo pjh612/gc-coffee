@@ -33,7 +33,7 @@ public class DefaultDesignerService implements DesignerService {
     @Transactional(readOnly = true)
     public DesignerDto findById(UUID id) {
         return DesignerDto.of(
-                designerRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("디자이너 정보를 찾을 수 없습니다."))
+                designerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("디자이너 정보를 찾을 수 없습니다."))
         );
     }
 

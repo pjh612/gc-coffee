@@ -137,6 +137,6 @@ class DefaultCustomerServiceTest {
         customerService.deleteById(customerA.getId());
 
         //then
-        assertThrows(RuntimeException.class, () ->customerService.deleteById(customerA.getId()));
+        assertThrows(RuntimeException.class, () -> customerService.deleteById(customerA.getId()));
     }
 }

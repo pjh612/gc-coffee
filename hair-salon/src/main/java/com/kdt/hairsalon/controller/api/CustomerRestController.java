@@ -37,6 +37,7 @@ public class CustomerRestController {
     public ResponseEntity<CustomerDto> getByCustomerId(@PathVariable("email") String email) {
         return ResponseEntity.ok(customerService.findByEmail(email));
     }
+
     @GetMapping("/name/{name}")
     public ResponseEntity<List<CustomerDto>> getByName(@PathVariable("name") String name) {
         return ResponseEntity.ok(customerService.findByName(name));

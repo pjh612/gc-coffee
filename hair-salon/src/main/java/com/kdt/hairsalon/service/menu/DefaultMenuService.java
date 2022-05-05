@@ -25,6 +25,7 @@ public class DefaultMenuService implements MenuService {
 
         return MenuDto.of(menu);
     }
+
     @Transactional(readOnly = true)
     @Override
     public MenuDto findById(UUID id) {

@@ -39,7 +39,7 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
 
             return appointment;
         } catch (DuplicateKeyException e) {
-            throw new NotValidAppointmentInsertException("같은 시간에 이미 예약한 회원 입니다.",e);
+            throw new NotValidAppointmentInsertException("같은 시간에 이미 예약한 회원 입니다.", e);
         }
     }
 

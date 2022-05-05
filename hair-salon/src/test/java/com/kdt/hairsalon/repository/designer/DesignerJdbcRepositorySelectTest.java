@@ -33,7 +33,7 @@ class DesignerJdbcRepositorySelectTest {
     private static EmbeddedMysql embeddedMySql;
 
     private final Designer designerA = new Designer(UUID.randomUUID(), "designerA", Position.DESIGNER, LocalDateTime.now());
-   private final Designer designerB = new Designer(UUID.randomUUID(), "designerB" ,Position.HEAD_DESIGNER,LocalDateTime.now());
+    private final Designer designerB = new Designer(UUID.randomUUID(), "designerB", Position.HEAD_DESIGNER, LocalDateTime.now());
 
     @BeforeAll
     void setup() {
@@ -71,7 +71,7 @@ class DesignerJdbcRepositorySelectTest {
     @DisplayName("디자이너 전체 조회 테스트")
     void findAllTest() {
         //given
-        Designer designerC = new Designer(UUID.randomUUID(), "designerC" ,Position.INTERN,LocalDateTime.now());
+        Designer designerC = new Designer(UUID.randomUUID(), "designerC", Position.INTERN, LocalDateTime.now());
         designerRepository.insert(designerC);
 
         //when
