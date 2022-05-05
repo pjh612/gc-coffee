@@ -9,6 +9,7 @@ export function Appointment(props) {
     const designerName = props.designerDto.name;
     const menuName = props.menuDto.name;
     const customerName = props.customerDto.name;
+    const status = props.status;
     const appointedAt = props.appointedAt;
 
     const handleSubmit = (e) => {
@@ -43,7 +44,9 @@ export function Appointment(props) {
                 <div className="row text-muted">{customerId}</div>
                 <div className="col text-center customerId">{customerName}</div>
             </div>
+        <div className="col text-center appointedAt">{status}</div>
             <div className="col text-center appointedAt">{appointedAt}</div>
-            <button className="btn btn-small btn-outline-dark" onClick={handleSubmit}>예약 취소</button>
+        {status !== 'DONE' ? <button className="btn btn-small btn-outline-dark" onClick={handleSubmit}>예약 취소</button> : <button className="btn btn-small btn-outline-dark" onClick={handleSubmit}>삭제</button>}
+
         </>
         }

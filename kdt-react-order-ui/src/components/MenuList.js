@@ -1,7 +1,7 @@
 import {Menu} from "./Menu";
 
 
-export function MenuList({menus = [], setMenus}) {
+export function MenuList({menus = [], setMenus, onItemClick}) {
     const onRemove = id => {
         setMenus(menus.filter(m => m.id !== id));
     };
@@ -10,7 +10,7 @@ export function MenuList({menus = [], setMenus}) {
         <ul className="list-group menus">
             {menus.map(v =>
                 <li key={v.id} className="list-group-item d-flex mt-3">
-                    <Menu {...v} onRemove={onRemove}/>
+                    <Menu {...v} onItemClick={onItemClick} onRemove={onRemove}/>
                 </li>
             )}
         </ul>

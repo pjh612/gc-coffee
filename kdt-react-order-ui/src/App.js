@@ -25,12 +25,31 @@ function App() {
     ]);
 
     const [appointments, setAppointments] = useState([
-        {appointmentId: 'uuid-1', customerDto: '', designerDto: '', menuDto: '', appointedAt: ''},
+        {appointmentId: 'uuid-1', customerDto: '', designerDto: '', menuDto: '', status:'', appointedAt: ''},
     ]);
 
     const [customers, setCustomers] = useState([
         {id: 'uuid-1', name: '', email: '', gender: '', birth: ''},
     ]);
+
+    const [appointment, setAppointment] = useState({
+        appointmentId: "", designerId: "", menuId: "", customerId: "", appointedAt: ""
+    });
+
+    const handleDesignerIdInputChanged = (e) => setAppointment({...appointment, designerId: e.target.value})
+    const handleMenuIdInputChanged = (e) => setAppointment({...appointment, menuId: e.target.value})
+    const handleCustomerIdInputChanged = (e) => setAppointment({...appointment, customerId: e.target.value})
+    const handleAppointedAtInputChanged = (e) => setAppointment({...appointment, appointedAt: e.target.value})
+
+    const onDesignerItemClick = (value) => {
+        setAppointment({...appointment, "designerId": value});
+    }
+    const onMenuItemClick = (value) => {
+        setAppointment({...appointment, "menuId": value});
+    }
+    const onCustomerItemClick = (value) => {
+        setAppointment({...appointment, "customerId": value});
+    }
 
     const onMenuAdd = (o, id) => {
         o = {...o, id: id};
@@ -46,16 +65,8 @@ function App() {
         setDesigners(designers.concat(o));
 
     };
-    const onAppointmentAdd = (o, data) => {
-        console.log(data);
-        o = {
-            ...o,
-            appointmentId: data.appointmentId,
-            designerName: data.designerName,
-            menuName: data.menuName,
-            customerName: data.customerName
-        };
-        setAppointments(appointments.concat(o));
+    const onAppointmentAdd = (data) => {
+        setAppointments(appointments.concat(data));
     };
     useEffect(() => {
         axios.get('http://localhost:8080/api/v1/designers')
@@ -82,13 +93,13 @@ function App() {
             <div className="card">
                 <div className="row">
                     <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
-                        <DesignerList designers={designers} setDesigners={setDesigners}/>
+                        <DesignerList designers={designers} setDesigners={setDesigners} onItemClick={onDesignerItemClick}/>
                     </div>
                     <div className="col-md-4 summary p-4">
-                        <DesignerAdd onAdd={onDesignerAdd}/>
+                        <DesignerAdd onAdd={onDesignerAdd} appointment={appointment} setAppointment={setAppointment}/>
                     </div>
                     <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
-                        <MenuList menus={menus} setMenus={setMenus}/>
+                        <MenuList menus={menus} setMenus={setMenus} onItemClick={onMenuItemClick}/>
                     </div>
                     <div className="col-md-4 summary p-4">
                         <MenuAdd onAdd={onMenuAdd}/>
@@ -97,11 +108,11 @@ function App() {
                         <AppointmentList appointments={appointments} setAppointments={setAppointments}/>
                     </div>
                     <div className="col-md-4 summary p-4">
-                        <AppointmentAdd onAdd={onAppointmentAdd}/>
+                        <AppointmentAdd onAdd={onAppointmentAdd} appointment={appointment} setAppointment={setAppointment} handleDesignerIdInputChanged={handleDesignerIdInputChanged} handleMenuIdInputChanged={handleMenuIdInputChanged} handleCustomerIdInputChanged={handleCustomerIdInputChanged} handleAppointedAtInputChanged={handleAppointedAtInputChanged}/>
                     </div>
 
                     <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
-                        <CustomerList customers={customers} setCustomers={setCustomers}/>
+                        <CustomerList customers={customers} setCustomers={setCustomers} onItemClick={onCustomerItemClick}/>
                     </div>
                     <div className="col-md-4 summary p-4">
                         <CustomerAdd onAdd={onCustomerAdd}/>

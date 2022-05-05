@@ -23,10 +23,12 @@ export function Customer(props) {
                 console.error(e);
             })
     }
-
+    const onClick = (e)=> {
+        props.onItemClick(id);
+    }
     return <>
         <div className="col">
-            <div className="row text-muted">{id}</div>
+            <div className="row text-muted" onClick={onClick}>{id}</div>
         </div>
         <div className="col text-center name">{name}</div>
         <div className="col text-center email">{email}</div>

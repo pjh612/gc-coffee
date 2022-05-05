@@ -1,6 +1,6 @@
 import {Designer} from "./Designer";
 
-export function DesignerList({designers=[], setDesigners}) {
+export function DesignerList({designers=[], setDesigners, onItemClick}) {
     const onRemove = id => {
         setDesigners(designers.filter(d => d.id !== id));
     };
@@ -9,7 +9,7 @@ export function DesignerList({designers=[], setDesigners}) {
         <ul className="list-group designers">
             {designers.map(v =>
                 <li key={v.id} className="list-group-item d-flex mt-3">
-                    <Designer {...v} onRemove={onRemove}/>
+                    <Designer {...v} onRemove={onRemove} onItemClick={onItemClick}/>
                 </li>
             )}
         </ul>

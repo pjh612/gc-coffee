@@ -21,11 +21,13 @@ export function Menu(props) {
                 console.error(e);
             })
     }
-
+    const onClick = (e)=> {
+        props.onItemClick(id);
+    }
     return <>
 
         <div className="col">
-            <div className="row text-muted">{id}</div>
+            <div className="row text-muted" onClick={onClick}>{id}</div>
             <div className="row">{name}</div>
         </div>
         <div className="col text-center position">{price}원</div>

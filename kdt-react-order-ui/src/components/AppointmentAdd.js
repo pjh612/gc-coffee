@@ -1,14 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import axios from "axios";
 
-export function AppointmentAdd({onAdd}) {
-    const [appointment, setAppointment] = useState({
-        appointmentId: "", designerId: "", menuId: "", customerId: "", appointedAt: ""
-    });
-    const handleDesignerIdInputChanged = (e) => setAppointment({...appointment, designerId: e.target.value})
-    const handleMenuIdInputChanged = (e) => setAppointment({...appointment, menuId: e.target.value})
-    const handleCustomerIdInputChanged = (e) => setAppointment({...appointment, customerId: e.target.value})
-    const handleAppointedAtInputChanged = (e) => setAppointment({...appointment, appointedAt: e.target.value})
+export function AppointmentAdd({onAdd, appointment, setAppointment,handleDesignerIdInputChanged,handleMenuIdInputChanged,handleCustomerIdInputChanged,handleAppointedAtInputChanged}) {
+
+
 
     const onAddAppointmentSubmit = () => {
         axios.post('http://localhost:8080/api/v1/appointments', {
@@ -20,9 +15,8 @@ export function AppointmentAdd({onAdd}) {
             }
         ).then(
             response => {
-                console.log(response);
+                onAdd(response.data);
                 alert("예약이 추가되었습니다.");
-                onAdd(appointment, response.data);
             },
             e => {
                 alert("서버 장애");
