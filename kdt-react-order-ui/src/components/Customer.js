@@ -7,7 +7,7 @@ export function Customer(props) {
     const email = props.email;
     const gender = props.gender;
     const birth = props.birth;
-
+    const comment = props.comment;
     const handleSubmit = (e) => {
         axios({
                 url: `http://localhost:8080/api/v1/customers/` + id,
@@ -26,11 +26,16 @@ export function Customer(props) {
     const onClick = (e)=> {
         props.onItemClick(id);
     }
+
+    const onNameClick = (e) => {
+        props.setCommentModal({...props.commentModal,id:id, open : true, message : comment})
+    }
+
     return <>
         <div className="col">
             <div className="row text-muted" onClick={onClick}>{id}</div>
         </div>
-        <div className="col text-center name">{name}</div>
+        <div className="col text-center name" onClick={onNameClick}>{name}</div>
         <div className="col text-center email">{email}</div>
         <div className="col text-center gender">{gender}</div>
         <div className="col text-center birth">{birth}</div>

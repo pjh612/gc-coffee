@@ -11,6 +11,7 @@ import {AppointmentList} from "./components/AppointmentList";
 import {AppointmentAdd} from "./components/AppointmentAdd";
 import {CustomerList} from "./components/CustomerList";
 import {CustomerAdd} from "./components/CustomerAdd";
+import {CustomerDetail} from "./components/CustomerDetail";
 
 function App() {
     const [menus, setMenus] = useState([
@@ -25,11 +26,11 @@ function App() {
     ]);
 
     const [appointments, setAppointments] = useState([
-        {appointmentId: 'uuid-1', customerDto: '', designerDto: '', menuDto: '', status:'', appointedAt: ''},
+        {appointmentId: 'uuid-1', customerDto: '', designerDto: '', menuDto: '', status: '', appointedAt: ''},
     ]);
 
     const [customers, setCustomers] = useState([
-        {id: 'uuid-1', name: '', email: '', gender: '', birth: ''},
+        {id: 'uuid-1', name: '', email: '', gender: '', birth: '', comment: ''},
     ]);
 
     const [appointment, setAppointment] = useState({
@@ -68,6 +69,11 @@ function App() {
     const onAppointmentAdd = (data) => {
         setAppointments(appointments.concat(data));
     };
+
+    const [commentModal, setCommentModal] = useState({open: false,id:"", title: "", message: "", callback: false});
+
+
+
     useEffect(() => {
         axios.get('http://localhost:8080/api/v1/designers')
             .then(v => setDesigners(v.data));
@@ -87,19 +93,23 @@ function App() {
 
     return (
         <div className="container-fluid">
+            <div>
+                <CustomerDetail open = {commentModal.open} id={commentModal.id} customers={customers} setCustomers={setCustomers} commentModal={commentModal} setCommentModal = {setCommentModal} message = {commentModal.message} title = {commentModal.title} callback = {commentModal.callback}/>
+            </div>
             <div className="row justify-content-center m-4">
                 <h1 className="text-center">Hello Hair Salon</h1>
             </div>
             <div className="card">
                 <div className="row">
                     <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
-                        <DesignerList designers={designers} setDesigners={setDesigners} onItemClick={onDesignerItemClick}/>
+                        <DesignerList designers={designers} setDesigners={setDesigners}
+                                      onItemClick={onDesignerItemClick}/>
                     </div>
                     <div className="col-md-4 summary p-4">
                         <DesignerAdd onAdd={onDesignerAdd} appointment={appointment} setAppointment={setAppointment}/>
                     </div>
                     <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
-                        <MenuList menus={menus} setMenus={setMenus} onItemClick={onMenuItemClick}/>
+                        <MenuList menus={menus} setMenus={setMenus} onItemClick={onMenuItemClick} />
                     </div>
                     <div className="col-md-4 summary p-4">
                         <MenuAdd onAdd={onMenuAdd}/>
@@ -108,11 +118,17 @@ function App() {
                         <AppointmentList appointments={appointments} setAppointments={setAppointments}/>
                     </div>
                     <div className="col-md-4 summary p-4">
-                        <AppointmentAdd onAdd={onAppointmentAdd} appointment={appointment} setAppointment={setAppointment} handleDesignerIdInputChanged={handleDesignerIdInputChanged} handleMenuIdInputChanged={handleMenuIdInputChanged} handleCustomerIdInputChanged={handleCustomerIdInputChanged} handleAppointedAtInputChanged={handleAppointedAtInputChanged}/>
+                        <AppointmentAdd onAdd={onAppointmentAdd} appointment={appointment}
+                                        setAppointment={setAppointment}
+                                        handleDesignerIdInputChanged={handleDesignerIdInputChanged}
+                                        handleMenuIdInputChanged={handleMenuIdInputChanged}
+                                        handleCustomerIdInputChanged={handleCustomerIdInputChanged}
+                                        handleAppointedAtInputChanged={handleAppointedAtInputChanged}/>
                     </div>
 
                     <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
-                        <CustomerList customers={customers} setCustomers={setCustomers} onItemClick={onCustomerItemClick}/>
+                        <CustomerList customers={customers} setCustomers={setCustomers}
+                                      onItemClick={onCustomerItemClick} setCommentModal={setCommentModal} commentModal={commentModal}/>
                     </div>
                     <div className="col-md-4 summary p-4">
                         <CustomerAdd onAdd={onCustomerAdd}/>
@@ -121,6 +137,10 @@ function App() {
                 </div>
 
             </div>
+
+
+
+
         </div>
     );
 }
