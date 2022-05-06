@@ -44,7 +44,7 @@ class AppointmentJdbcRepositoryTest {
 
     private static EmbeddedMysql embeddedMySql;
 
-    private final Designer designerA = new Designer(UUID.randomUUID(), "designerA", Position.DESIGNER, LocalDateTime.now());
+    private final Designer designerA = new Designer(UUID.randomUUID(), "designerA", Position.DESIGNER, "", LocalDateTime.now());
     private final Menu menu = new Menu(UUID.randomUUID(), "menuA", 1000, LocalDateTime.now(), LocalDateTime.now());
     private final Customer customerA = new Customer(
             UUID.randomUUID(),

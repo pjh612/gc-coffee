@@ -15,14 +15,10 @@ import {CustomerDetail} from "./components/CustomerDetail";
 
 function App() {
     const [menus, setMenus] = useState([
-        {id: 'uuid-1', name: '콜롬비아 커피 1', price: 5000},
-        {id: 'uuid-2', name: '콜롬비아 커피 2', price: 5000},
-        {id: 'uuid-3', name: '콜롬비아 커피 3', price: 5000}
+
     ]);
     const [designers, setDesigners] = useState([
-        {id: 'uuid-1', name: 'park', position: 'INTERN', joinedAt: ''},
-        {id: 'uuid-2', name: 'lee', position: 'INTERN', joinedAt: ''},
-        {id: 'uuid-3', name: 'kim', position: 'INTERN', joinedAt: ''},
+        {id: 'uuid-1', name: 'park', position: 'INTERN',specialty:'', joinedAt: ''},
     ]);
 
     const [appointments, setAppointments] = useState([

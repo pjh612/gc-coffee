@@ -22,7 +22,7 @@ public class DesignerJdbcRepository implements DesignerRepository {
 
     @Override
     public Designer insert(Designer designer) {
-        int update = jdbcTemplate.update("INSERT INTO designers(id, name, position, joined_at) VALUES(UNHEX(REPLACE(:id, '-', '')), :name, :position, :joinedAt)"
+        int update = jdbcTemplate.update("INSERT INTO designers(id, name, position, specialty, joined_at) VALUES(UNHEX(REPLACE(:id, '-', '')), :name, :position, :specialty, :joinedAt)"
                 , toParamMap(designer));
 
         if (update != 1) {
@@ -60,11 +60,12 @@ public class DesignerJdbcRepository implements DesignerRepository {
     }
 
     @Override
-    public UUID update(UUID id, String name, Position position) {
-        int update = jdbcTemplate.update("UPDATE designers SET name = :name, position = :position WHERE id = UNHEX(REPLACE(:id, '-', ''))",
+    public UUID update(UUID id, String name, Position position, String specialty) {
+        int update = jdbcTemplate.update("UPDATE designers SET name = :name, position = :position, specialty = :specialty WHERE id = UNHEX(REPLACE(:id, '-', ''))",
                 Map.of(
                         "id", id.toString().getBytes(),
                         "name", name,
+                        "specialty", specialty,
                         "position", position.toString()
                 ));
 
@@ -78,9 +79,10 @@ public class DesignerJdbcRepository implements DesignerRepository {
         UUID id = toUUID(resultSet.getBytes("id"));
         String name = resultSet.getString("name");
         Position position = Position.valueOf(resultSet.getString("position"));
+        String specialty = resultSet.getString("specialty");
         LocalDateTime joinedAt = toLocalDateTime(resultSet.getTimestamp("joined_at"));
 
-        return new Designer(id, name, position, joinedAt);
+        return new Designer(id, name, position, specialty, joinedAt);
     };
 
     private Map<String, Object> toParamMap(Designer designer) {
@@ -89,6 +91,7 @@ public class DesignerJdbcRepository implements DesignerRepository {
         paramMap.put("id", designer.getId().toString().getBytes());
         paramMap.put("name", designer.getName());
         paramMap.put("position", designer.getPosition().toString());
+        paramMap.put("specialty", designer.getSpecialty());
         paramMap.put("joinedAt", designer.getJoinedAt());
 
         return paramMap;

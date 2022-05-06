@@ -1,19 +1,16 @@
 package com.kdt.hairsalon.service.designer;
 
 import com.kdt.hairsalon.model.Designer;
-
 import com.kdt.hairsalon.model.Position;
 import com.kdt.hairsalon.repository.designer.DesignerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
 import java.util.stream.Collectors;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Repository
@@ -23,8 +20,8 @@ public class DefaultDesignerService implements DesignerService {
 
     @Override
     @Transactional
-    public DesignerDto create(String name, Position position) {
-        Designer designer = new Designer(UUID.randomUUID(), name, position, LocalDateTime.now());
+    public DesignerDto create(String name, Position position, String specialty) {
+        Designer designer = new Designer(UUID.randomUUID(), name, position, specialty, LocalDateTime.now());
 
         return DesignerDto.of(designerRepository.insert(designer));
     }
@@ -54,7 +51,7 @@ public class DefaultDesignerService implements DesignerService {
 
     @Override
     @Transactional
-    public UUID update(UUID id, String name, Position position) {
-        return designerRepository.update(id, name, position);
+    public UUID update(UUID id, String name, Position position, String specialty) {
+        return designerRepository.update(id, name, position, specialty);
     }
 }

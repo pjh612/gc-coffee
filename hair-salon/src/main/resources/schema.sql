@@ -3,6 +3,7 @@ CREATE TABLE designers
     id        BINARY(16) PRIMARY KEY,
     name      VARCHAR(10) NOT NULL,
     position  VARCHAR(20),
+    specialty VARCHAR(50),
     joined_at datetime(6) DEFAULT NULL
 );
 

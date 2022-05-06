@@ -10,18 +10,20 @@ export function DesignerAdd({onAdd}) {
 
 
     const onAddDesignerSubmit = () => {
-            axios.post('http://localhost:8080/api/v1/designers', {
-                    name: designer.name,
-                    position: designer.position
-                }
-            ).then(
-                v => {alert("디자이너가 추가되었습니다.");
-                    onAdd(designer,v.data.id);
-                },
-                e => {
-                    alert("서버 장애");
-                    console.error(e);
-                })
+        axios.post('http://localhost:8080/api/v1/designers', {
+                name: designer.name,
+                position: designer.position,
+                specialty: ""
+            }
+        ).then(
+            v => {
+                alert("디자이너가 추가되었습니다.");
+                onAdd(designer, v.data.id);
+            },
+            e => {
+                alert("서버 장애");
+                console.error(e);
+            })
     }
     const handleSubmit = (e) => {
         if (designer.name === "" || designer.position === "") {

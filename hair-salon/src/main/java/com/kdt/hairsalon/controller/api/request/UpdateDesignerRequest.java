@@ -14,4 +14,5 @@ public class UpdateDesignerRequest {
     @NotBlank
     private String name;
     private Position position;
+    private String specialty;
 }

@@ -55,7 +55,7 @@ class DesignerJdbcRepositoryTest {
     @DisplayName("디자이너 추가 테스트")
     void insertTest() {
         //given
-        Designer designerA = new Designer(UUID.randomUUID(), "designerA", Position.DESIGNER, LocalDateTime.now());
+        Designer designerA = new Designer(UUID.randomUUID(), "designerA", Position.DESIGNER, "", LocalDateTime.now());
 
         //when
         Designer insertedDesigner = designerRepository.insert(designerA);
@@ -69,7 +69,7 @@ class DesignerJdbcRepositoryTest {
     @DisplayName("디자이너 삭제 테스트")
     void deleteByIdTest() {
         //given
-        Designer designerB = new Designer(UUID.randomUUID(), "designerB", Position.HEAD_DESIGNER, LocalDateTime.now());
+        Designer designerB = new Designer(UUID.randomUUID(), "designerB", Position.HEAD_DESIGNER, "", LocalDateTime.now());
         designerRepository.insert(designerB);
 
         //when
@@ -84,7 +84,7 @@ class DesignerJdbcRepositoryTest {
     @DisplayName("designerB 포지션 = HEAD_DESIGNER -> DESIGNER")
     void updatePositionTest() {
         //given
-        Designer designerC = new Designer(UUID.randomUUID(), "designerC", Position.HEAD_DESIGNER, LocalDateTime.now());
+        Designer designerC = new Designer(UUID.randomUUID(), "designerC", Position.HEAD_DESIGNER, "", LocalDateTime.now());
         designerRepository.insert(designerC);
 
         //when
@@ -100,7 +100,7 @@ class DesignerJdbcRepositoryTest {
     @DisplayName("designerD 이름 = designerB -> designerE")
     void updateNameTest() {
         //given
-        Designer designerD = new Designer(UUID.randomUUID(), "designerD", Position.HEAD_DESIGNER, LocalDateTime.now());
+        Designer designerD = new Designer(UUID.randomUUID(), "designerD", Position.HEAD_DESIGNER, "", LocalDateTime.now());
         designerRepository.insert(designerD);
 
         //when

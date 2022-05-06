@@ -164,11 +164,12 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
         UUID designerId = toUUID(resultSet.getBytes("d.id"));
         String designerName = resultSet.getString("d.name");
         Position designerPosition = Position.valueOf(resultSet.getString("d.position"));
+        String designerSpecialty = resultSet.getString("d.specialty");
         LocalDateTime designerJoinedAt = toLocalDateTime(resultSet.getTimestamp("d.joined_at"));
 
         Menu menu = new Menu(menuId, menuName, menuPrice, menuCreatedAt, menuUpdatedAt);
         Customer customer = new Customer(customerId, customerName, customerEmail, customerGender, customerBirth, customerCreatedAt, customerUpdatedAt, customerComment);
-        Designer designer = new Designer(designerId, designerName, designerPosition, designerJoinedAt);
+        Designer designer = new Designer(designerId, designerName, designerPosition, designerSpecialty, designerJoinedAt);
 
         return new Appointment(appointmentId, designer, customer, menu, status, appointedAt);
     };

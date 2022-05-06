@@ -9,10 +9,9 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
 
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.ScriptResolver.classPathScript;
@@ -55,7 +54,7 @@ class DefaultDesignerServiceTest {
     @DisplayName("designer 추가 테스트")
     void createTest() {
         //when
-        DesignerDto designerA = designerService.create("designerA", Position.INTERN);
+        DesignerDto designerA = designerService.create("designerA", Position.INTERN, "");
         DesignerDto foundDesigner = designerService.findById(designerA.getId());
 
         //then
@@ -66,7 +65,7 @@ class DefaultDesignerServiceTest {
     @DisplayName("디자이너 정보 ID로 조회 테스트")
     void findByIdTest() {
         //given
-        DesignerDto designerA = designerService.create("designerA", Position.INTERN);
+        DesignerDto designerA = designerService.create("designerA", Position.INTERN, "");
 
         //when
         DesignerDto foundDesigner = designerService.findById(designerA.getId());
@@ -79,8 +78,8 @@ class DefaultDesignerServiceTest {
     @DisplayName("디자이너 정보 전체 조회 테스트")
     void findAllTest() {
         //given
-        DesignerDto designerA = designerService.create("designerA", Position.INTERN);
-        DesignerDto designerB = designerService.create("designerB", Position.DESIGNER);
+        DesignerDto designerA = designerService.create("designerA", Position.INTERN, "");
+        DesignerDto designerB = designerService.create("designerB", Position.DESIGNER, "");
 
         //when
         List<DesignerDto> foundDesigners = designerService.findAll();
@@ -94,7 +93,7 @@ class DefaultDesignerServiceTest {
     @DisplayName("디자이너 정보 삭제 테스트")
     void deleteByIdTest() {
         //given
-        DesignerDto designerA = designerService.create("designerA", Position.INTERN);
+        DesignerDto designerA = designerService.create("designerA", Position.INTERN, "");
 
         //when
         designerService.deleteById(designerA.getId());
@@ -107,10 +106,10 @@ class DefaultDesignerServiceTest {
     @DisplayName("디자이너 이름 변경 테스트")
     void updateDesignerNameTest() {
         //given
-        DesignerDto designerA = designerService.create("designerA", Position.INTERN);
+        DesignerDto designerA = designerService.create("designerA", Position.INTERN, "");
 
         //when
-        designerService.update(designerA.getId(), "designerB", Position.INTERN);
+        designerService.update(designerA.getId(), "designerB", Position.INTERN, "");
         DesignerDto foundDesigner = designerService.findById(designerA.getId());
 
         //then
@@ -123,10 +122,10 @@ class DefaultDesignerServiceTest {
     @DisplayName("디자이너 직책 변경 테스트")
     void updateDesignerPositionTest() {
         //given
-        DesignerDto designerA = designerService.create("designerA", Position.INTERN);
+        DesignerDto designerA = designerService.create("designerA", Position.INTERN, "");
 
         //when
-        designerService.update(designerA.getId(), "designerA", Position.DESIGNER);
+        designerService.update(designerA.getId(), "designerA", Position.DESIGNER, "");
         DesignerDto foundDesigner = designerService.findById(designerA.getId());
 
         //then

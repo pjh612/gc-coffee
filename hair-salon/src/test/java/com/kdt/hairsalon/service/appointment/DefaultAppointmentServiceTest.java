@@ -57,7 +57,7 @@ class DefaultAppointmentServiceTest {
     void dataInit() {
         menuA = menuService.insert("menuA", 12000);
         menuB = menuService.insert("menuB", 30000);
-        designerA = designerService.create("designerA", Position.INTERN);
+        designerA = designerService.create("designerA", Position.INTERN, "");
         customerA = customerService.create("customerA", "customera@gmail.com", Gender.MAN, LocalDate.now());
         customerB = customerService.create("customerB", "customerb@gmail.com", Gender.WOMAN, LocalDate.now());
     }

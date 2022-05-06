@@ -16,5 +16,5 @@ public interface DesignerRepository {
 
     void deleteById(UUID id);
 
-    UUID update(UUID id, String name, Position position);
+    UUID update(UUID id, String name, Position position, String specialty);
 }

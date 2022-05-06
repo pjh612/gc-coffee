@@ -16,9 +16,10 @@ public class DesignerDto {
     private final UUID id;
     private final String name;
     private final Position position;
+    private final String specialty;
     private final LocalDateTime joinedAt;
 
     public static DesignerDto of(Designer designer) {
-        return new DesignerDto(designer.getId(), designer.getName(), designer.getPosition(), designer.getJoinedAt());
+        return new DesignerDto(designer.getId(), designer.getName(), designer.getPosition(), designer.getSpecialty(), designer.getJoinedAt());
     }
 }

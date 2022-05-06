@@ -14,4 +14,6 @@ public class CreateDesignerRequest {
 
     private Position position;
 
+    private String specialty;
+
 }

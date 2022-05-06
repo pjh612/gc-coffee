@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface DesignerService {
-    DesignerDto create(String name, Position position);
+    DesignerDto create(String name, Position position, String specialty);
 
     DesignerDto findById(UUID id);
 
@@ -14,5 +14,5 @@ public interface DesignerService {
 
     void deleteById(UUID id);
 
-    UUID update(UUID id, String name, Position position);
+    UUID update(UUID id, String name, Position position, String specialty);
 }

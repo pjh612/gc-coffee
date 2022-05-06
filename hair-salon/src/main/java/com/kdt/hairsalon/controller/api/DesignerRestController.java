@@ -21,7 +21,7 @@ public class DesignerRestController {
 
     @PostMapping
     public ResponseEntity<DesignerDto> create(@RequestBody @Valid CreateDesignerRequest request) {
-        return ResponseEntity.ok(designerService.create(request.getName(), request.getPosition()));
+        return ResponseEntity.ok(designerService.create(request.getName(), request.getPosition(), request.getSpecialty()));
     }
 
     @GetMapping("/{id}")
@@ -43,6 +43,6 @@ public class DesignerRestController {
 
     @PatchMapping
     public ResponseEntity<UUID> updateById(@RequestBody @Valid UpdateDesignerRequest request) {
-        return ResponseEntity.ok(designerService.update(request.getId(), request.getName(), request.getPosition()));
+        return ResponseEntity.ok(designerService.update(request.getId(), request.getName(), request.getPosition(), request.getSpecialty()));
     }
 }
