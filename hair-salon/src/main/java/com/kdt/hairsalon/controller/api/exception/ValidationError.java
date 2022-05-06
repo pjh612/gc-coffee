@@ -6,11 +6,11 @@ import org.springframework.validation.FieldError;
 @Getter
 class ValidationError {
     String field;
-    String defaultMessage;
+    String message;
 
-    public ValidationError(String field, String defaultMessage) {
+    public ValidationError(String field, String message) {
         this.field = field;
-        this.defaultMessage = defaultMessage;
+        this.message = message;
 
     }
 
