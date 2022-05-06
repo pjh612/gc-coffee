@@ -38,8 +38,8 @@ public class CustomerJdbcRepositorySelectTest {
             "customerA@gmail.com",
             Gender.MAN, LocalDate.now(),
             LocalDateTime.now(),
-            LocalDateTime.now()
-    );
+            LocalDateTime.now(),
+            "");
 
     Customer customerB = new Customer(
             UUID.randomUUID(),
@@ -47,8 +47,8 @@ public class CustomerJdbcRepositorySelectTest {
             "customerB@gmail.com",
             Gender.MAN, LocalDate.now(),
             LocalDateTime.now(),
-            LocalDateTime.now()
-    );
+            LocalDateTime.now(),
+            "");
 
     Customer customerC = new Customer(
             UUID.randomUUID(),
@@ -56,8 +56,8 @@ public class CustomerJdbcRepositorySelectTest {
             "customerC@gmail.com",
             Gender.WOMAN, LocalDate.now(),
             LocalDateTime.now(),
-            LocalDateTime.now()
-    );
+            LocalDateTime.now(),
+            "");
 
     @BeforeAll
     void setup() {
@@ -99,8 +99,8 @@ public class CustomerJdbcRepositorySelectTest {
                 "customerD@gmail.com",
                 Gender.MAN, LocalDate.now(),
                 LocalDateTime.now(),
-                LocalDateTime.now()
-        );
+                LocalDateTime.now(),
+                "");
         customerRepository.insert(sameNameCustomer);
 
         //when

@@ -22,8 +22,8 @@ public class CustomerJdbcRepository implements CustomerRepository {
 
     @Override
     public Customer insert(Customer customer) {
-        int update = jdbcTemplate.update("INSERT INTO customers(id, name, email, gender, birth, created_at, updated_at) " +
-                "VALUES(UNHEX(REPLACE(:id, '-', '')), :name, :email, :gender, :birth, :createdAt, :updatedAt)", toParamMap(customer));
+        int update = jdbcTemplate.update("INSERT INTO customers(id, name, email, gender, birth, comment, created_at, updated_at) " +
+                "VALUES(UNHEX(REPLACE(:id, '-', '')), :name, :email, :gender, :birth, :comment, :createdAt, :updatedAt)", toParamMap(customer));
         if (update != 1) {
             throw new RuntimeException("데이터 삽입에 실패했습니다.");
         }
@@ -78,6 +78,15 @@ public class CustomerJdbcRepository implements CustomerRepository {
             throw new RuntimeException("Customer 정보가 삭제되지 않았습니다.");
     }
 
+    @Override
+    public void update(Customer customer) {
+        int update = jdbcTemplate.update("UPDATE customers SET comment = :comment WHERE id = UNHEX(REPLACE(:id, '-', ''))",
+                toParamMap(customer));
+
+        if (update != 1)
+            throw new RuntimeException("Customer 정보가 삭제되지 않았습니다.");
+    }
+
     private static final RowMapper<Customer> productRowMapper = (resultSet, i) -> {
         UUID id = toUUID(resultSet.getBytes("id"));
         String name = resultSet.getString("name");
@@ -86,8 +95,9 @@ public class CustomerJdbcRepository implements CustomerRepository {
         LocalDate birth = resultSet.getDate("birth").toLocalDate();
         LocalDateTime createdAt = toLocalDateTime(resultSet.getTimestamp("created_at"));
         LocalDateTime updatedAt = toLocalDateTime(resultSet.getTimestamp("updated_at"));
+        String comment = resultSet.getString("comment");
 
-        return new Customer(id, name, email, gender, birth, createdAt, updatedAt);
+        return new Customer(id, name, email, gender, birth, createdAt, updatedAt, comment);
     };
 
     private Map<String, Object> toParamMap(Customer customer) {
@@ -100,6 +110,7 @@ public class CustomerJdbcRepository implements CustomerRepository {
         paramMap.put("birth", customer.getBirth());
         paramMap.put("createdAt", customer.getCreatedAt());
         paramMap.put("updatedAt", customer.getUpdatedAt());
+        paramMap.put("comment", customer.getComment());
 
         return paramMap;
     }

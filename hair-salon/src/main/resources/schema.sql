@@ -15,6 +15,7 @@ CREATE TABLE customers
     birth      datetime(6) DEFAULT NULL,
     created_at datetime(6) NOT NULL,
     updated_at datetime(6) DEFAULT NULL,
+    comment VARCHAR(500) DEFAULT NULL,
     CONSTRAINT unq_customer_email UNIQUE (email)
 );
 
@@ -42,4 +43,5 @@ CREATE TABLE appointments
     CONSTRAINT fk_appointments_to_menu FOREIGN KEY (menu_id) REFERENCES menus (id) ON DELETE CASCADE,
     CONSTRAINT fk_appointments_to_customer FOREIGN KEY (customer_id) REFERENCES customers (id) ON DELETE CASCADE,
     CONSTRAINT fk_appointments_to_designer FOREIGN KEY (designer_id) REFERENCES designers (id) ON DELETE CASCADE
-)
+);
+

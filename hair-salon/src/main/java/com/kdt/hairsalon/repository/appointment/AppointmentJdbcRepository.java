@@ -156,6 +156,7 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
         String customerEmail = resultSet.getString("c.email");
         Gender customerGender = Gender.valueOf(resultSet.getString("c.gender"));
         LocalDate customerBirth = resultSet.getDate("c.birth").toLocalDate();
+        String customerComment = resultSet.getString("c.comment");
         LocalDateTime customerCreatedAt = toLocalDateTime(resultSet.getTimestamp("c.created_at"));
         LocalDateTime customerUpdatedAt = toLocalDateTime(resultSet.getTimestamp("c.updated_at"));
 
@@ -166,7 +167,7 @@ public class AppointmentJdbcRepository implements AppointmentRepository {
         LocalDateTime designerJoinedAt = toLocalDateTime(resultSet.getTimestamp("d.joined_at"));
 
         Menu menu = new Menu(menuId, menuName, menuPrice, menuCreatedAt, menuUpdatedAt);
-        Customer customer = new Customer(customerId, customerName, customerEmail, customerGender, customerBirth, customerCreatedAt, customerUpdatedAt);
+        Customer customer = new Customer(customerId, customerName, customerEmail, customerGender, customerBirth, customerCreatedAt, customerUpdatedAt, customerComment);
         Designer designer = new Designer(designerId, designerName, designerPosition, designerJoinedAt);
 
         return new Appointment(appointmentId, designer, customer, menu, status, appointedAt);

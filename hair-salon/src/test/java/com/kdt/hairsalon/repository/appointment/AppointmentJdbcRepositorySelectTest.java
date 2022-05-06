@@ -52,8 +52,8 @@ class AppointmentJdbcRepositorySelectTest {
             "customerA@gmail.com",
             Gender.MAN, LocalDate.now(),
             LocalDateTime.now(),
-            LocalDateTime.now()
-    );
+            LocalDateTime.now(),
+            "");
 
     private final Customer customerB = new Customer(
             UUID.randomUUID(),
@@ -61,8 +61,8 @@ class AppointmentJdbcRepositorySelectTest {
             "customerB@gmail.com",
             Gender.WOMAN, LocalDate.now(),
             LocalDateTime.now(),
-            LocalDateTime.now()
-    );
+            LocalDateTime.now(),
+            "");
 
     private final Appointment appointmentA = new Appointment(UUID.randomUUID(), designerA, customerA, menu, AppointmentStatus.APPOINTED, LocalDateTime.now());
     private final Appointment appointmentB = new Appointment(UUID.randomUUID(), designerA, customerB, menu, AppointmentStatus.APPOINTED, LocalDateTime.now());

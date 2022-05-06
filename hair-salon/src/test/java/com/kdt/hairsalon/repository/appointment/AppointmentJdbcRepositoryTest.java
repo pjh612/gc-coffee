@@ -52,8 +52,8 @@ class AppointmentJdbcRepositoryTest {
             "customerA@gmail.com",
             Gender.MAN, LocalDate.now(),
             LocalDateTime.now(),
-            LocalDateTime.now()
-    );
+            LocalDateTime.now(),
+            "");
 
     private final Customer customerB = new Customer(
             UUID.randomUUID(),
@@ -61,8 +61,8 @@ class AppointmentJdbcRepositoryTest {
             "customerB@gmail.com",
             Gender.WOMAN, LocalDate.now(),
             LocalDateTime.now(),
-            LocalDateTime.now()
-    );
+            LocalDateTime.now(),
+            "");
 
     @BeforeAll
     void setup() {

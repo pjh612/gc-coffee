@@ -1,6 +1,7 @@
 package com.kdt.hairsalon.controller.api;
 
 import com.kdt.hairsalon.controller.api.request.CustomerJoinRequest;
+import com.kdt.hairsalon.controller.api.request.UpdateCustomerRequest;
 import com.kdt.hairsalon.service.customer.CustomerDto;
 import com.kdt.hairsalon.service.customer.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,10 @@ public class CustomerRestController {
         customerService.deleteById(id);
 
         return ResponseEntity.ok(id);
+    }
+
+    @PatchMapping
+    public ResponseEntity<CustomerDto> updateComment(@RequestBody UpdateCustomerRequest request) {
+        return ResponseEntity.ok(customerService.updateComment(request.getId(), request.getComment()));
     }
 }

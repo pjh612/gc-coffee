@@ -19,9 +19,10 @@ public class CustomerDto {
     private final LocalDate birth;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
+    private final String comment;
 
     public CustomerDto(UUID id, String name, String email, Gender gender, LocalDate birth,
-                       LocalDateTime createdAt, LocalDateTime updatedAt) {
+                       LocalDateTime createdAt, LocalDateTime updatedAt, String comment) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -29,6 +30,7 @@ public class CustomerDto {
         this.birth = birth;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.comment = comment;
     }
 
     public static CustomerDto of(Customer customer) {
@@ -38,6 +40,7 @@ public class CustomerDto {
                 customer.getGender(),
                 customer.getBirth(),
                 customer.getCreatedAt(),
-                customer.getUpdatedAt());
+                customer.getUpdatedAt(),
+                customer.getComment());
     }
 }

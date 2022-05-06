@@ -17,9 +17,10 @@ public class Customer {
     private final LocalDate birth;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
+    private String comment;
 
     public Customer(UUID id, String name, String email, Gender gender, LocalDate birth, LocalDateTime createdAt,
-                    LocalDateTime updatedAt) {
+                    LocalDateTime updatedAt, String comment) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -27,5 +28,10 @@ public class Customer {
         this.birth = birth;
         this.createdAt = createdAt.withNano(0);
         this.updatedAt = updatedAt.withNano(0);
+        this.comment = comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

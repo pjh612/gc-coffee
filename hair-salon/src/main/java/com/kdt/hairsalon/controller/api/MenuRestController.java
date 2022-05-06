@@ -37,10 +37,8 @@ public class MenuRestController {
         return ResponseEntity.ok(id);
     }
 
-    @PostMapping("/menus/{id}")
+    @GetMapping("/menus/{id}")
     public ResponseEntity<MenuDto> getById(@PathVariable("id") UUID id) {
-        MenuDto menu = menuService.findById(id);
-
-        return ResponseEntity.ok(menu);
+        return ResponseEntity.ok(menuService.findById(id));
     }
 }

@@ -19,4 +19,6 @@ public interface CustomerService {
     List<CustomerDto> findAll();
 
     void deleteById(UUID id);
+
+    CustomerDto updateComment(UUID id, String comment);
 }

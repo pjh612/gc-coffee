@@ -63,7 +63,7 @@ class CustomerJdbcRepositoryTest {
                 "customerA@gmail.com",
                 Gender.MAN, LocalDate.now(),
                 LocalDateTime.now(),
-                LocalDateTime.now());
+                LocalDateTime.now(), "");
 
         //when
         customerRepository.insert(customer);
@@ -84,8 +84,8 @@ class CustomerJdbcRepositoryTest {
                 "customerB@gmail.com",
                 Gender.MAN, LocalDate.now(),
                 LocalDateTime.now(),
-                LocalDateTime.now()
-        );
+                LocalDateTime.now(),
+                "");
 
         Customer duplicatedEmailCustomer = new Customer(
                 UUID.randomUUID(),
@@ -93,8 +93,8 @@ class CustomerJdbcRepositoryTest {
                 "customerB@gmail.com",
                 Gender.MAN, LocalDate.now(),
                 LocalDateTime.now(),
-                LocalDateTime.now()
-        );
+                LocalDateTime.now(),
+                "");
         customerRepository.insert(customer);
 
         //when, then
@@ -111,8 +111,8 @@ class CustomerJdbcRepositoryTest {
                 "customerG@gmail.com",
                 Gender.MAN, LocalDate.now(),
                 LocalDateTime.now(),
-                LocalDateTime.now()
-        );
+                LocalDateTime.now(),
+                "");
         customerRepository.insert(customer);
 
         //when
