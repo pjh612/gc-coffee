@@ -16,7 +16,7 @@ public class Customer {
     private final Gender gender;
     private final LocalDate birth;
     private final LocalDateTime createdAt;
-    private final LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
     private String comment;
 
     public Customer(UUID id, String name, String email, Gender gender, LocalDate birth, LocalDateTime createdAt,
@@ -33,5 +33,6 @@ public class Customer {
 
     public void setComment(String comment) {
         this.comment = comment;
+        this.updatedAt = LocalDateTime.now().withNano(0);
     }
 }
